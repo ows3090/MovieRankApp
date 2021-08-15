@@ -10,7 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieRankApp">
         <activity android:name=".view.MainActivity"></activity>
-        <activity android:name=".view.SplashActivity">
+        <activity
+            android:name=".view.SplashActivity"
+            android:theme="@style/Theme.SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
