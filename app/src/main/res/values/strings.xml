@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MovieRankApp</string>
+    <string name="user_name">ows3090</string>
+    <string name="user_email">ows3090@naver.com</string>
+    <string name="menu_movie">영화목록</string>
+    <string name="menu_movieAPI">영화 API</string>
+    <string name="menu_register">예매하기</string>
+    <string name="menu_setting">사용자 설정</string>
 </resources>

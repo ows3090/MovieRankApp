@@ -8,5 +8,4 @@
     <item android:bottom="100dp">
         <bitmap android:src="@drawable/connect_logo" android:gravity="bottom"/>
     </item>
-
 </layer-list>

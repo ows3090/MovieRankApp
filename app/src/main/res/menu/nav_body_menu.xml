@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_movie"
+            android:icon="@drawable/menu_movie_background"
+            android:iconTint="@color/gray"
+            android:title="@string/menu_movie"/>
+        <item
+            android:id="@+id/nav_movieAPI"
+            android:icon="@drawable/menu_movieapi_background"
+            android:title="@string/menu_movieAPI"/>
+        <item
+            android:id="@+id/nav_register"
+            android:icon="@drawable/menu_register_background"
+            android:title="@string/menu_register"/>
+    </group>
+
+    <item android:title="설정">
+        <menu>
+            <item
+                android:id="@+id/nav_setting"
+                android:icon="@drawable/menu_setting_background"
+                android:title="@string/menu_setting"/>
+        </menu>
+    </item>
+</menu>

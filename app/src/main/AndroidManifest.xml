@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieRankApp">
-        <activity android:name=".view.MainActivity"></activity>
+        <activity
+            android:name=".view.MainActivity"
+            android:label="영화목록"/>
         <activity
             android:name=".view.SplashActivity"
             android:theme="@style/Theme.SplashTheme">
