@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MovieRankApp</string>
+    <string name="app_name">씨네마천국</string>
     <string name="user_name">ows3090</string>
     <string name="user_email">ows3090@naver.com</string>
     <string name="menu_movie">영화목록</string>
@@ -8,4 +8,5 @@
     <string name="menu_setting">사용자 설정</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_activity_name">영화 목록</string>
 </resources>
