@@ -1,4 +1,4 @@
-package ows.kotlinstudy.movierankapp.repo
+package ows.kotlinstudy.movierankapp.repository
 
 import ows.kotlinstudy.movierankapp.request.ApiRequestFactory
 
