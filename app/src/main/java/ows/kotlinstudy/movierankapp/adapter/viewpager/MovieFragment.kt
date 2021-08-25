@@ -1,22 +1,23 @@
 package ows.kotlinstudy.movierankapp.adapter.viewpager
 
-import android.icu.util.Calendar
-import android.icu.util.LocaleData
-import android.os.Build
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import ows.kotlinstudy.movierankapp.R
-import ows.kotlinstudy.movierankapp.data.SimpleMovieModel
+import ows.kotlinstudy.movierankapp.data.SimpleMovie
 import ows.kotlinstudy.movierankapp.databinding.FragmentMovieBinding
-import java.time.LocalDate
-import java.time.LocalDateTime
 
-class MovieFragment(val simpleMovieModel: SimpleMovieModel) : Fragment() {
+class MovieFragment(val simpleMovie: SimpleMovie) : Fragment() {
 
     private lateinit var binding : FragmentMovieBinding
 
@@ -35,9 +36,33 @@ class MovieFragment(val simpleMovieModel: SimpleMovieModel) : Fragment() {
     }
 
     private fun initViews(){
-        Glide.with(binding.root).load(simpleMovieModel.image).into(binding.movieImageView)
-        binding.movieNameTextView.text = simpleMovieModel.title
-        binding.movieInfoTextView.text = "예매율 ${simpleMovieModel.reservationRate}% | ${simpleMovieModel.grade}세 관람가 | 개봉일 : ${simpleMovieModel.date}"
+        Glide.with(binding.root)
+            .load(simpleMovie.image)
+            .listener(object: RequestListener<Drawable>{
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    binding.progressBar.isVisible = false
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    binding.progressBar.isVisible = true
+                    return false
+                }
+            })
+            .into(binding.movieImageView)
+        binding.movieNameTextView.text = "${simpleMovie.id}. ${simpleMovie.title}"
+        binding.movieInfoTextView.text = "예매율 ${simpleMovie.reservationRate}% | ${simpleMovie.grade}세 관람가 | 개봉일 : ${simpleMovie.date}"
     }
 
 }

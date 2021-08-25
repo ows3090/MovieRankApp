@@ -3,7 +3,7 @@ package ows.kotlinstudy.movierankapp.data
 
 import com.google.gson.annotations.SerializedName
 
-data class SimpleMovieModel(
+data class SimpleMovie(
     @SerializedName("audience_rating")
     val audienceRating: Double,
     @SerializedName("date")

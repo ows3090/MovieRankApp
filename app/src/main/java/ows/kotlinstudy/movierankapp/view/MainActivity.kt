@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         setSupportActionBar(binding.included.toolbar)
-
         initViews()
     }
 

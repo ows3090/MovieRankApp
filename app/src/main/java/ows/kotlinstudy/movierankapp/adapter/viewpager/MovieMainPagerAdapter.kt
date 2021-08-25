@@ -1,17 +1,20 @@
 package ows.kotlinstudy.movierankapp.adapter.viewpager
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import ows.kotlinstudy.movierankapp.data.SimpleMovieModel
+import ows.kotlinstudy.movierankapp.data.SimpleMovie
 
 class MovieMainPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
-    private val simpleMovieModels = mutableListOf<SimpleMovieModel>()
+    private val simpleMovies : ArrayList<SimpleMovie> = arrayListOf()
 
-    fun addItem(simpleMovieModel: SimpleMovieModel) = simpleMovieModels.add(simpleMovieModel)
+    fun addItems(items : List<SimpleMovie>){
+        simpleMovies.clear()
+        simpleMovies.addAll(items);
+        notifyDataSetChanged()
+    }
 
-    override fun getItemCount(): Int = simpleMovieModels.size
+    override fun getItemCount(): Int = simpleMovies.size
 
-    override fun createFragment(position: Int) = MovieFragment(simpleMovieModels.get(position))
+    override fun createFragment(position: Int) = MovieFragment(simpleMovies.get(position))
 }
