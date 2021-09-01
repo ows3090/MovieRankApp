@@ -1,7 +1,14 @@
 package ows.kotlinstudy.movierankapp.repository
 
-import ows.kotlinstudy.movierankapp.request.ApiRequestFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import ows.kotlinstudy.movierankapp.response.MovieListResponse
+import retrofit2.Response
 
 class MovieRepository {
-    fun requestMovieList(type: Int) = ApiRequestFactory.retrofit.reqeustMovieList(type)
+    suspend fun requestMovieList(type: Int) : Response<MovieListResponse>{
+        return withContext(Dispatchers.IO){
+            ApiRequestFactory.retrofit.requestMovieListForCorotine(type)
+        }
+    }
 }

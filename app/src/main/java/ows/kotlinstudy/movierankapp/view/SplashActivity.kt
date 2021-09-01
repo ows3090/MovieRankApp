@@ -7,11 +7,10 @@ import android.os.Handler
 import ows.kotlinstudy.movierankapp.R
 
 class SplashActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Handler(mainLooper).postDelayed(Runnable {
+        Handler(mainLooper).postDelayed({
             startActivity(
                 Intent(this, MainActivity::class.java)
             )

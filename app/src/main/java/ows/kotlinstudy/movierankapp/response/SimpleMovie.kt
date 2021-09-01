@@ -1,4 +1,4 @@
-package ows.kotlinstudy.movierankapp.data
+package ows.kotlinstudy.movierankapp.response
 
 
 import androidx.room.ColumnInfo

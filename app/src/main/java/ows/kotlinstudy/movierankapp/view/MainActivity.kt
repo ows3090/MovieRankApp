@@ -18,9 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.lifecycleOwner = this
 
         setSupportActionBar(binding.included.toolbar)
         initViews()
@@ -32,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
         binding.included.toolbar.setupWithNavController(navController,appBarConfiguration)
     }
+
+
 
 
 }

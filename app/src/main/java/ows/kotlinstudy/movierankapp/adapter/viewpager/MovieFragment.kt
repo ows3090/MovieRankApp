@@ -15,10 +15,10 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import ows.kotlinstudy.movierankapp.R
-import ows.kotlinstudy.movierankapp.data.SimpleMovie
+import ows.kotlinstudy.movierankapp.response.SimpleMovie
 import ows.kotlinstudy.movierankapp.databinding.FragmentMovieBinding
 
-class MovieFragment(val simpleMovie: SimpleMovie) : Fragment() {
+class MovieFragment(val simpleMovie: SimpleMovie, val position: Int) : Fragment() {
 
     private lateinit var binding: FragmentMovieBinding
 
@@ -63,7 +63,7 @@ class MovieFragment(val simpleMovie: SimpleMovie) : Fragment() {
                 }
             })
             .into(binding.movieImageView)
-        binding.movieNameTextView.text = "${simpleMovie.id}. ${simpleMovie.title}"
+        binding.movieNameTextView.text = "${position+1}. ${simpleMovie.title}"
         binding.movieInfoTextView.text =
             "예매율 ${simpleMovie.reservationRate}% | ${simpleMovie.grade}세 관람가 | 개봉일 : ${simpleMovie.date}"
     }

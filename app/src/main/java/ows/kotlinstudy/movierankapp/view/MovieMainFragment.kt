@@ -1,5 +1,6 @@
 package ows.kotlinstudy.movierankapp.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,12 +9,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListAdapter
+import android.widget.ListView
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import kotlinx.coroutines.*
 import ows.kotlinstudy.movierankapp.NetworkManager
 import ows.kotlinstudy.movierankapp.NetworkStatus
 import ows.kotlinstudy.movierankapp.R
@@ -21,12 +26,17 @@ import ows.kotlinstudy.movierankapp.adapter.viewpager.MovieMainPagerAdapter
 import ows.kotlinstudy.movierankapp.database.MovieDatabase
 import ows.kotlinstudy.movierankapp.databinding.FragmentMoviemainBinding
 import ows.kotlinstudy.movierankapp.viewmodel.MovieMainViewModel
+import kotlin.coroutines.CoroutineContext
 
 class MovieMainFragment : Fragment() {
 
-    private lateinit var binding: FragmentMoviemainBinding
+    private var binding: FragmentMoviemainBinding? = null
     private lateinit var movieMainPagerAdapter: MovieMainPagerAdapter
-    private val movieMainViewModel by lazy { ViewModelProvider(this).get(MovieMainViewModel::class.java) }
+    private val movieMainViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(
+            MovieMainViewModel::class.java
+        )
+    }
 
     private val db by lazy {
         Room.databaseBuilder(
@@ -39,9 +49,11 @@ class MovieMainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_moviemain, container, false);
-        return binding.root
+    ): View {
+        val fragmentMoviemainBinding: FragmentMoviemainBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_moviemain, container, false)
+        binding = fragmentMoviemainBinding
+        return fragmentMoviemainBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,21 +64,27 @@ class MovieMainFragment : Fragment() {
         loadMovieList()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
     private fun initViews() {
         movieMainPagerAdapter = MovieMainPagerAdapter(this)
-        binding.viewPager.adapter = movieMainPagerAdapter
+        binding?.let {
+            it.viewPager.adapter = movieMainPagerAdapter
+        }
     }
 
     private fun bindViews() {
         movieMainViewModel.getLoading().observe(viewLifecycleOwner, {
-            binding.progresBar.isVisible = it
+            binding?.progresBar?.isVisible = it
         })
 
         movieMainViewModel.getSimpleMovies().observe(viewLifecycleOwner, {
-            Thread {
-                db.movieDao().insertAllMovie(it)
-            }.start()
-
+//            launch(Dispatchers.IO){
+//                db.movieDao().insertAllMovie(it)
+//            }
             movieMainPagerAdapter.addItems(it)
             movieMainPagerAdapter.notifyDataSetChanged()
         })
@@ -74,14 +92,12 @@ class MovieMainFragment : Fragment() {
 
     private fun loadMovieList() {
         if (NetworkManager.getNetworkConnectedStatus(requireContext()) == NetworkStatus.NOT_CONNECTED) {
-            Log.d("msg","not connected")
             Thread {
-                Log.d("msg",""+db.movieDao().getAll().size)
+                Log.d("msg", "" + db.movieDao().getAll().size)
                 movieMainPagerAdapter.addItems(db.movieDao().getAll())
                 movieMainPagerAdapter.notifyDataSetChanged()
             }.start()
         } else {
-            Log.d("msg","connected")
             movieMainViewModel.requestSimpleMovieList(1)
         }
     }

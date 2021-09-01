@@ -1,11 +1,10 @@
-package ows.kotlinstudy.movierankapp.request
+package ows.kotlinstudy.movierankapp.repository
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import ows.kotlinstudy.movierankapp.BuildConfig
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.net.URL
 import java.util.concurrent.TimeUnit
 
 object ApiRequestFactory {

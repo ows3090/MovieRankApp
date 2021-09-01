@@ -1,7 +1,6 @@
-package ows.kotlinstudy.movierankapp.data
+package ows.kotlinstudy.movierankapp.response
 
 
-import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
 data class MovieListResponse(

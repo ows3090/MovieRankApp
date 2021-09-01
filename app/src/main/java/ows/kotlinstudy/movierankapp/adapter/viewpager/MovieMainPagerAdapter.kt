@@ -2,7 +2,7 @@ package ows.kotlinstudy.movierankapp.adapter.viewpager
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import ows.kotlinstudy.movierankapp.data.SimpleMovie
+import ows.kotlinstudy.movierankapp.response.SimpleMovie
 
 class MovieMainPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
@@ -16,5 +16,5 @@ class MovieMainPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment)
 
     override fun getItemCount(): Int = simpleMovies.size
 
-    override fun createFragment(position: Int) = MovieFragment(simpleMovies.get(position))
+    override fun createFragment(position: Int) = MovieFragment(simpleMovies.get(position),position)
 }

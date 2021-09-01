@@ -2,49 +2,40 @@ package ows.kotlinstudy.movierankapp.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.room.Room
-import ows.kotlinstudy.movierankapp.NetworkManager
-import ows.kotlinstudy.movierankapp.data.MovieListResponse
-import ows.kotlinstudy.movierankapp.data.SimpleMovie
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import ows.kotlinstudy.movierankapp.dagger.DaggerRepositoryComponent
+import ows.kotlinstudy.movierankapp.response.SimpleMovie
 import ows.kotlinstudy.movierankapp.repository.MovieRepository
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import javax.inject.Inject
 
 class MovieMainViewModel : ViewModel() {
 
+    private val DEFAULT_TYPE = 1
     private val simpleMovies = MutableLiveData<List<SimpleMovie>>()
     private val loading = MutableLiveData<Boolean>()
 
-    private val repository by lazy { MovieRepository() }
+    @Inject lateinit var repository : MovieRepository
 
-    fun loadSimpleMovieList(type: Int){
-        loading.value = true
-
+    init {
+        DaggerRepositoryComponent.builder().build().inject(this)
     }
 
     fun requestSimpleMovieList(type: Int){
-        loading.value = true
-        repository.requestMovieList(type).enqueue(object: Callback<MovieListResponse>{
-            override fun onResponse(
-                call: Call<MovieListResponse>,
-                response: Response<MovieListResponse>
-            ) {
-                if(response.isSuccessful){
-                    response.body()?.let {
-                        simpleMovies.value = it.result
-                    }
+        viewModelScope.launch {
+            loading.value = true
+            val response = repository.requestMovieList(DEFAULT_TYPE)
+
+            if(response.isSuccessful){
+                response.body()?.let {
+                    simpleMovies.value = it.result
                 }
-                loading.value = false
             }
-
-            override fun onFailure(call: Call<MovieListResponse>, t: Throwable) {
-
-            }
-        })
+            loading.value = false
+        }
     }
 
-    fun getSimpleMovies() = simpleMovies
+   fun getSimpleMovies() = simpleMovies
 
     fun getLoading() = loading
 }
