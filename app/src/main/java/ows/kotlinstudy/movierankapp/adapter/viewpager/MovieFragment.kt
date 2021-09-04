@@ -1,22 +1,28 @@
 package ows.kotlinstudy.movierankapp.adapter.viewpager
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.Drawable
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.util.LruCache
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
+import kotlinx.coroutines.*
 import ows.kotlinstudy.movierankapp.R
-import ows.kotlinstudy.movierankapp.response.SimpleMovie
 import ows.kotlinstudy.movierankapp.databinding.FragmentMovieBinding
+import ows.kotlinstudy.movierankapp.response.SimpleMovie
+import java.io.IOException
+import java.io.InputStream
+import java.lang.NullPointerException
+import java.lang.RuntimeException
+import java.net.MalformedURLException
+import java.net.URI
+import java.net.URL
 
 class MovieFragment(val simpleMovie: SimpleMovie, val position: Int) : Fragment() {
 
@@ -38,34 +44,21 @@ class MovieFragment(val simpleMovie: SimpleMovie, val position: Int) : Fragment(
 
     @SuppressLint("SetTextI18n")
     private fun initViews() {
-        Glide.with(binding.root)
-            .load(simpleMovie.image)
-            .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    binding.progressBar.isVisible = true
-                    return false
-                }
-
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    binding.progressBar.isVisible = false
-                    return false
-                }
-            })
-            .into(binding.movieImageView)
-        binding.movieNameTextView.text = "${position+1}. ${simpleMovie.title}"
+        Log.d("msg","initViews")
+        binding.movieNameTextView.text = "${position + 1}. ${simpleMovie.title}"
         binding.movieInfoTextView.text =
             "예매율 ${simpleMovie.reservationRate}% | ${simpleMovie.grade}세 관람가 | 개봉일 : ${simpleMovie.date}"
+        loadProfileImage()
     }
 
+    private fun loadProfileImage() = GlobalScope.launch(Dispatchers.IO){
+        try {
+            val inputstream = URL(simpleMovie.image).openConnection().getInputStream()
+            val bitmap = BitmapFactory.decodeStream(inputstream)
+            binding.movieImageView.setImageBitmap(bitmap)
+        } catch (e : Exception){
+            e.printStackTrace()
+        }
+    }
 }
+

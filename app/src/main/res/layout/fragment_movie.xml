@@ -27,7 +27,8 @@
             app:layout_constraintEnd_toEndOf="@id/movieImageView"
             app:layout_constraintStart_toStartOf="@id/movieImageView"
             app:layout_constraintTop_toTopOf="@id/movieImageView"
-            tools:visibility="visible" />
+            tools:visibility="visible"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/movieNameTextView"
