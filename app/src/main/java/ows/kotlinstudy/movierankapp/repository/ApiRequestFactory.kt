@@ -13,7 +13,7 @@ object ApiRequestFactory {
         .addConverterFactory(GsonConverterFactory.create())
         .client(buildOkHttpClient())
         .build()
-        .create(Service::class.java)
+        .create(MovieService::class.java)
 
     private fun buildOkHttpClient() : OkHttpClient {
         val interceptor = HttpLoggingInterceptor()

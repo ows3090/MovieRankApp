@@ -1,10 +1,10 @@
 package ows.kotlinstudy.movierankapp
 
 import android.app.Application
-import ows.kotlinstudy.movierankapp.dagger.AppComponent
-import ows.kotlinstudy.movierankapp.dagger.DBModule
-import ows.kotlinstudy.movierankapp.dagger.DaggerAppComponent
-import ows.kotlinstudy.movierankapp.dagger.NetworkModule
+import ows.kotlinstudy.movierankapp.dagger.component.AppComponent
+import ows.kotlinstudy.movierankapp.dagger.module.DBModule
+import ows.kotlinstudy.movierankapp.dagger.component.DaggerAppComponent
+import ows.kotlinstudy.movierankapp.dagger.module.NetworkModule
 
 class MovieApplication : Application() {
 

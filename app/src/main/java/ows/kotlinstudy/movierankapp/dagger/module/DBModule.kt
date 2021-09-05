@@ -1,10 +1,11 @@
-package ows.kotlinstudy.movierankapp.dagger
+package ows.kotlinstudy.movierankapp.dagger.module
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import dagger.Module
 import dagger.Provides
 import ows.kotlinstudy.movierankapp.MovieApplication
+import ows.kotlinstudy.movierankapp.dagger.component.ActivityComponent
 import ows.kotlinstudy.movierankapp.database.MovieDatabase
 import javax.inject.Singleton
 

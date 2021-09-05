@@ -1,4 +1,4 @@
-package ows.kotlinstudy.movierankapp.dagger
+package ows.kotlinstudy.movierankapp.dagger.module
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -6,14 +6,23 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import ows.kotlinstudy.movierankapp.BuildConfig
 import ows.kotlinstudy.movierankapp.MovieApplication
 import ows.kotlinstudy.movierankapp.NetworkStatus
+import ows.kotlinstudy.movierankapp.dagger.component.ActivityComponent
+import ows.kotlinstudy.movierankapp.repository.ApiRequestFactory
+import ows.kotlinstudy.movierankapp.repository.MovieService
+import ows.kotlinstudy.movierankapp.repository.Url
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module(subcomponents = [ActivityComponent::class])
 class NetworkModule {
     @Provides
-    @Singleton
     fun provideNetworkStatus(movieApplication: MovieApplication) : NetworkStatus {
         val manager = movieApplication.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
@@ -36,5 +45,28 @@ class NetworkModule {
             }
         }
         return NetworkStatus.NOT_CONNECTED
+    }
+
+    @Provides
+    @Singleton
+    fun provideRemoteDataSource() : MovieService {
+        val interceptor = HttpLoggingInterceptor()
+        if(BuildConfig.DEBUG){
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
+        }else{
+            interceptor.level = HttpLoggingInterceptor.Level.NONE
+        }
+
+        val client = OkHttpClient.Builder()
+            .connectTimeout(5,TimeUnit.SECONDS)
+            .addInterceptor(interceptor)
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl(Url.MOVIE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+            .create(MovieService::class.java)
     }
 }
