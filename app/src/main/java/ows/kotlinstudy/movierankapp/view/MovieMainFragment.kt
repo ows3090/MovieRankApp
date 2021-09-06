@@ -27,17 +27,7 @@ class MovieMainFragment : Fragment() {
     private var binding: FragmentMoviemainBinding? = null
     private lateinit var movieMainPagerAdapter: MovieMainPagerAdapter
     private lateinit var movieMainViewModel: MovieMainViewModel
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    private val db by lazy {
-        Room.databaseBuilder(
-            requireContext(),
-            MovieDatabase::class.java,
-            "Movie-Database"
-        ).build()
-    }
+    @Inject lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,25 +76,12 @@ class MovieMainFragment : Fragment() {
         })
 
         movieMainViewModel.getSimpleMovies().observe(viewLifecycleOwner, {
-//            launch(Dispatchers.IO){
-//                db.movieDao().insertAllMovie(it)
-//            }
             movieMainPagerAdapter.addItems(it)
-            movieMainPagerAdapter.notifyDataSetChanged()
         })
     }
 
     private fun loadMovieList() {
-        if (NetworkManager.getNetworkConnectedStatus(requireContext()) == NetworkStatus.NOT_CONNECTED) {
-            Thread {
-                Log.d("msg", "" + db.movieDao().getAll().size)
-                movieMainPagerAdapter.addItems(db.movieDao().getAll())
-                movieMainPagerAdapter.notifyDataSetChanged()
-            }.start()
-        } else {
-            movieMainViewModel.requestSimpleMovieList(1)
-        }
+        movieMainViewModel.requestSimpleMovieList()
     }
-
 
 }

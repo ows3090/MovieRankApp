@@ -10,7 +10,7 @@ class MovieMainPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment)
 
     fun addItems(items : List<SimpleMovie>){
         simpleMovies.clear()
-        simpleMovies.addAll(items);
+        simpleMovies.addAll(items)
         notifyDataSetChanged()
     }
 

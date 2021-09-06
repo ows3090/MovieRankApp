@@ -12,7 +12,6 @@ import ows.kotlinstudy.movierankapp.BuildConfig
 import ows.kotlinstudy.movierankapp.MovieApplication
 import ows.kotlinstudy.movierankapp.NetworkStatus
 import ows.kotlinstudy.movierankapp.dagger.component.ActivityComponent
-import ows.kotlinstudy.movierankapp.repository.ApiRequestFactory
 import ows.kotlinstudy.movierankapp.repository.MovieService
 import ows.kotlinstudy.movierankapp.repository.Url
 import retrofit2.Retrofit

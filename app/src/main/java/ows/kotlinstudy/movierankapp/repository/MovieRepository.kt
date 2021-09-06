@@ -23,6 +23,7 @@ class MovieRepository @Inject constructor(
         val response = remoteDataSource.fecthMovieList(type)
 
         if(response.isSuccessful){
+            localDataSource.insertMovieList(response.body()?.result)
             return ResponseResult.Success(response.body(), 1)
         }
         return ResponseResult.Fail(response.body(), 2)
@@ -31,10 +32,4 @@ class MovieRepository @Inject constructor(
     suspend fun requestLocalDataSource(type: Int) : ResponseResult<MovieListResponse>{
         return localDataSource.fecthMovieList(type)
     }
-
-//    suspend fun requestMovieList(type: Int) : Response<MovieListResponse>{
-//        return withContext(Dispatchers.IO){
-//            ApiRequestFactory.retrofit.requestMovieListForCorotine(type)
-//        }
-//    }
 }

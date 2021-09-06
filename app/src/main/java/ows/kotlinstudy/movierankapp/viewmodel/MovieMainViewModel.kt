@@ -10,38 +10,27 @@ import ows.kotlinstudy.movierankapp.response.SimpleMovie
 import javax.inject.Inject
 
 class MovieMainViewModel @Inject constructor(
-    val repository : MovieRepository
+    val repository: MovieRepository
 ) : ViewModel() {
     private val DEFAULT_TYPE = 1
     private val simpleMovies = MutableLiveData<List<SimpleMovie>>()
     private val loading = MutableLiveData<Boolean>()
 
-    fun requestSimpleMovieList(type: Int){
+    fun requestSimpleMovieList(type: Int = DEFAULT_TYPE) {
         viewModelScope.launch {
             loading.value = true
             val response = repository.requestMovieList(DEFAULT_TYPE)
 
-            if(response.code == 1){
+            if (response.code == 1) {
                 response.data?.let {
                     simpleMovies.value = it.result
                 }
             }
-//            val response = repository.requestMovieList(DEFAULT_TYPE)
-//
-//            if(response.isSuccessful){
-//                response.body()?.let {
-//                    simpleMovies.value = it.result
-//                }
-//            }
             loading.value = false
         }
     }
 
-    fun test(){
-        Log.d("msg","test")
-    }
-
-   fun getSimpleMovies() = simpleMovies
+    fun getSimpleMovies() = simpleMovies
 
     fun getLoading() = loading
 
