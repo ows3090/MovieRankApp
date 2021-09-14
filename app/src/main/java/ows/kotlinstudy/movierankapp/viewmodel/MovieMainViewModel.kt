@@ -13,25 +13,37 @@ class MovieMainViewModel @Inject constructor(
     val repository: MovieRepository
 ) : ViewModel() {
     private val DEFAULT_TYPE = 1
-    private val simpleMovies = MutableLiveData<List<SimpleMovie>>()
-    private val loading = MutableLiveData<Boolean>()
+    private val simpleMoviesLiveData = MutableLiveData<List<SimpleMovie>>()
+    private var simpleMovies = listOf<SimpleMovie>()
+    private val loadingLiveData = MutableLiveData<Boolean>()
+    private var sortNameLiveData = MutableLiveData<String>()
 
     fun requestSimpleMovieList(type: Int = DEFAULT_TYPE) {
         viewModelScope.launch {
-            loading.value = true
-            val response = repository.requestMovieList(DEFAULT_TYPE)
+            loadingLiveData.value = true
+            val response = repository.requestMovieList(type)
 
             if (response.code == 1) {
                 response.data?.let {
-                    simpleMovies.value = it.result
+                    simpleMovies = it.result
+                    simpleMoviesLiveData.value = simpleMovies
                 }
             }
-            loading.value = false
+
+            when(type){
+                1 -> sortNameLiveData.value = "예매율순"
+                2 -> sortNameLiveData.value = "큐레이션"
+                3 -> sortNameLiveData.value = "상영예정"
+            }
+
+            loadingLiveData.value = false
         }
     }
 
-    fun getSimpleMovies() = simpleMovies
+    fun getSimpleMoviesLiveData() = simpleMoviesLiveData
 
-    fun getLoading() = loading
+    fun getLoadingLiveData() = loadingLiveData
+
+    fun getSortNameLiveData() = sortNameLiveData
 
 }

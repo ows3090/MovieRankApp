@@ -6,6 +6,7 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import ows.kotlinstudy.movierankapp.BuildConfig
@@ -19,9 +20,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-@Module(subcomponents = [ActivityComponent::class])
+@Module
 class NetworkModule {
     @Provides
+    @Reusable
     fun provideNetworkStatus(movieApplication: MovieApplication) : NetworkStatus {
         val manager = movieApplication.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 

@@ -5,5 +5,4 @@ import dagger.Provides
 
 @Module
 class FragmentModule {
-
 }

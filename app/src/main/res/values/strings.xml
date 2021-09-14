@@ -11,4 +11,7 @@
     <string name="main_activity_name">영화 목록</string>
     <string name="movie_name">영화명</string>
     <string name="movie_info">상세정보</string>
+    <string name="reservation_sort">예매율순</string>
+    <string name="curation_sort">큐레이션</string>
+    <string name="due_sort">상영예정</string>
 </resources>

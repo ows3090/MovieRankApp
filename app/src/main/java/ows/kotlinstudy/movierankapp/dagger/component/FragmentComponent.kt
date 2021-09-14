@@ -17,7 +17,6 @@ interface FragmentComponent {
     @Subcomponent.Builder
     interface Builder{
         fun setModule(fragmentModule: FragmentModule) : Builder
-        @BindsInstance fun setFragment(movieMainFragment: MovieMainFragment) : Builder
         fun build() : FragmentComponent
     }
 }
