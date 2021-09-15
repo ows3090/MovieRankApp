@@ -1,6 +1,7 @@
 package ows.kotlinstudy.movierankapp.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -23,12 +24,12 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
     private var binding: FragmentMoviemainBinding? = null
     private lateinit var movieMainPagerAdapter: MovieMainPagerAdapter
     private lateinit var movieMainViewModel: MovieMainViewModel
-    @Inject lateinit var viewModelFactory: ViewModelFactory
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     private var isMenuOpen: Boolean = false
-    private lateinit var menuTextView : TextView
-    private lateinit var sortName : String
-    private lateinit var translateTop : Animation
-    private lateinit var translateBottom : Animation
+    private lateinit var menuTextView: TextView
+    private lateinit var translateTop: Animation
+    private lateinit var translateBottom: Animation
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +37,7 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
     ): View {
         val fragmentMoviemainBinding: FragmentMoviemainBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_moviemain, container, false)
+
         setHasOptionsMenu(true)
         binding = fragmentMoviemainBinding
         initViewModel()
@@ -61,14 +63,29 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
         inflater.inflate(R.menu.menu_moviesort, menu)
         (menu.findItem(R.id.sortItem).actionView as LinearLayout).run {
             setOnClickListener {
-                if(isMenuOpen){
+                if (isMenuOpen) {
                     binding?.menuLayout?.startAnimation(translateTop)
-                }else{
-                    binding?.menuLayout?.isVisible = isMenuOpen
+                } else {
                     binding?.menuLayout?.startAnimation(translateBottom)
                 }
             }
             menuTextView = findViewById(R.id.menuTextView)
+        }
+        initMenuActionView()
+    }
+
+    private fun initMenuActionView() {
+        binding?.reservationSortButton?.setOnClickListener {
+            movieMainViewModel.requestSimpleMovieList(1)
+            binding?.menuLayout?.startAnimation(translateTop)
+        }
+        binding?.curationSortButton?.setOnClickListener {
+            movieMainViewModel.requestSimpleMovieList(2)
+            binding?.menuLayout?.startAnimation(translateTop)
+        }
+        binding?.dueSortButton?.setOnClickListener {
+            movieMainViewModel.requestSimpleMovieList(3)
+            binding?.menuLayout?.startAnimation(translateTop)
         }
     }
 
@@ -119,12 +136,8 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
     override fun onAnimationStart(p0: Animation?) = Unit
 
     override fun onAnimationEnd(p0: Animation?) {
-        if(isMenuOpen){
-            isMenuOpen = false
-            binding?.menuLayout?.isVisible = isMenuOpen
-        }else{
-            isMenuOpen = true
-        }
+        isMenuOpen = !isMenuOpen
+        binding?.menuLayout?.isVisible = isMenuOpen
     }
 
     override fun onAnimationRepeat(p0: Animation?) = Unit

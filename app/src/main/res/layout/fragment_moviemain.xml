@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewmodel"
             type="ows.kotlinstudy.movierankapp.viewmodel.MovieMainViewModel" />
@@ -52,7 +51,6 @@
                 android:layout_margin="0dp"
                 android:background="@color/colorPrimaryDark"
                 android:drawableLeft="@drawable/menu_order"
-                android:onClick="@{() -> viewmodel.requestSimpleMovieList(1)}"
                 android:padding="10dp"
                 android:text="@string/reservation_sort"
                 android:textColor="@color/white"
@@ -64,7 +62,6 @@
                 android:layout_height="60dp"
                 android:background="@color/colorPrimaryDark"
                 android:drawableLeft="@drawable/menu_order"
-                android:onClick="@{() -> viewmodel.requestSimpleMovieList(2)}"
                 android:padding="10dp"
                 android:text="@string/curation_sort"
                 android:textColor="@color/white"
@@ -76,7 +73,6 @@
                 android:layout_height="60dp"
                 android:background="@color/colorPrimaryDark"
                 android:drawableLeft="@drawable/menu_order"
-                android:onClick="@{() -> viewmodel.requestSimpleMovieList(3)}"
                 android:padding="10dp"
                 android:text="@string/due_sort"
                 android:textColor="@color/white"

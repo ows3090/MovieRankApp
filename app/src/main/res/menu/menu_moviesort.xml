@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/sortItem"
-        android:actionLayout="@layout/menu_sort"
+        app:actionLayout="@layout/menu_sort"
         android:title="sortItem"
         app:showAsAction="always" />
 </menu>

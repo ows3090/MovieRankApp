@@ -1,6 +1,8 @@
 package ows.kotlinstudy.movierankapp.viewmodel
 
 import android.util.Log
+import android.widget.Button
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,6 +21,7 @@ class MovieMainViewModel @Inject constructor(
     private var sortNameLiveData = MutableLiveData<String>()
 
     fun requestSimpleMovieList(type: Int = DEFAULT_TYPE) {
+        Log.d("msg","requestSimpleMovieList ${type}")
         viewModelScope.launch {
             loadingLiveData.value = true
             val response = repository.requestMovieList(type)
@@ -45,5 +48,4 @@ class MovieMainViewModel @Inject constructor(
     fun getLoadingLiveData() = loadingLiveData
 
     fun getSortNameLiveData() = sortNameLiveData
-
 }
