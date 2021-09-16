@@ -7,25 +7,25 @@ import ows.kotlinstudy.movierankapp.response.SimpleMovie
 
 class MovieMainPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
-    private val simpleMovies : ArrayList<SimpleMovie> = arrayListOf()
-    private val hashCodes : ArrayList<Long> = arrayListOf()
+    private val simpleMovies: ArrayList<SimpleMovie> = arrayListOf()
 
-    fun addItems(items : List<SimpleMovie>){
+    fun addItems(items: List<SimpleMovie>) {
         simpleMovies.clear()
         simpleMovies.addAll(items)
-        items.forEach { hashCodes.add(it.hashCode().toLong()) }
         notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = simpleMovies.size
 
-    override fun createFragment(position: Int) = MovieFragment(simpleMovies.get(position),position)
+    override fun createFragment(position: Int) = MovieFragment(simpleMovies.get(position), position)
 
     override fun getItemId(position: Int): Long {
-        return hashCodes.get(position)
+        return simpleMovies.get(position).id*1000.toLong() + position.toLong()
     }
 
     override fun containsItem(itemId: Long): Boolean {
-        return hashCodes.contains(itemId)
+        return simpleMovies.filterIndexed { index, simpleMovie ->
+            itemId == (index + simpleMovie.id*1000).toLong()
+        }.size != 0
     }
 }
