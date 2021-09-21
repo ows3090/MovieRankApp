@@ -122,6 +122,7 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
 
         movieMainViewModel.getSimpleMoviesLiveData().observe(viewLifecycleOwner, {
             movieMainPagerAdapter.addItems(it)
+            movieMainPagerAdapter.notifyDataSetChanged()
         })
 
         movieMainViewModel.getSortNameLiveData().observe(viewLifecycleOwner, {

@@ -20,6 +20,7 @@ import kotlinx.coroutines.*
 import ows.kotlinstudy.movierankapp.R
 import ows.kotlinstudy.movierankapp.databinding.FragmentMovieBinding
 import ows.kotlinstudy.movierankapp.response.SimpleMovie
+import java.io.BufferedInputStream
 import java.io.IOException
 import java.io.InputStream
 import java.lang.NullPointerException
@@ -27,10 +28,12 @@ import java.lang.RuntimeException
 import java.net.MalformedURLException
 import java.net.URI
 import java.net.URL
+import kotlin.math.max
 
 class MovieFragment(val simpleMovie: SimpleMovie, val position: Int) : Fragment() {
 
     private lateinit var binding: FragmentMovieBinding
+    private var bitmap: Bitmap? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,55 +54,47 @@ class MovieFragment(val simpleMovie: SimpleMovie, val position: Int) : Fragment(
         binding.movieNameTextView.text = "${position + 1}. ${simpleMovie.title}"
         binding.movieInfoTextView.text =
             "예매율 ${simpleMovie.reservationRate}% | ${simpleMovie.grade}세 관람가 | 개봉일 : ${simpleMovie.date}"
-        //loadProfileImage()
-        Glide.with(binding.movieImageView.rootView)
-            .load(simpleMovie.image)
-            .into(binding.movieImageView)
+        loadProfileImage()
     }
 
     private fun loadProfileImage() {
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-            binding.progressBar.isVisible = true
-            try {
-                var inputstream = URL(simpleMovie.image).openConnection().getInputStream()
-                val options = BitmapFactory.Options()
-                options.inJustDecodeBounds = true
-                BitmapFactory.decodeStream(inputstream, null, options)
 
-                options.inSampleSize = calculateInSampleSize(options, binding.movieImageView.layoutParams.height, binding.movieImageView.layoutParams.width)
-                options.inJustDecodeBounds = false
+        if(memoryCache.get(simpleMovie.image) != null){
+            bitmap = memoryCache.get(simpleMovie.image)
+            binding.movieImageView.setImageBitmap(bitmap)
+        }else{
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                try {
+                    var inputstream = URL(simpleMovie.image).openConnection().getInputStream()
+                    var bufferedInputStream = BufferedInputStream(inputstream)
+                    val options = BitmapFactory.Options()
 
-                inputstream.close()
-                inputstream = URL(simpleMovie.image).openConnection().getInputStream()
-                val bitmap = BitmapFactory.decodeStream(inputstream, null, options)
-                if(bitmap == null){
-                    Log.d("msg","bitmap null")
+                    bufferedInputStream.mark(bufferedInputStream.available())
+                    options.inJustDecodeBounds = true
+                    BitmapFactory.decodeStream(bufferedInputStream, null, options)
+
+                    bufferedInputStream.reset()
+                    options.inSampleSize = calculateInSampleSize(
+                        options,
+                        binding.movieImageView.layoutParams.width,
+                        binding.movieImageView.layoutParams.height
+                    )
+                    options.inJustDecodeBounds = false
+
+                    bitmap = BitmapFactory.decodeStream(bufferedInputStream, null, options)
+                    memoryCache.put(simpleMovie.image, bitmap)
+                    binding.movieImageView.setImageBitmap(bitmap)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-                binding.movieImageView.setImageBitmap(bitmap)
-                binding.progressBar.isVisible = false
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
-        }
-    }
-
-    private fun decodeShrinkImageView(inputStream: InputStream, reqHeight: Int, reqWidth: Int ): Bitmap? {
-        return BitmapFactory.Options().run {
-            inJustDecodeBounds = true
-            BitmapFactory.decodeStream(inputStream, null, this)
-
-            inSampleSize = calculateInSampleSize(this, reqHeight, reqWidth)
-
-            inJustDecodeBounds = false
-
-            BitmapFactory.decodeStream(inputStream, null, this)
         }
     }
 
     private fun calculateInSampleSize(
         options: BitmapFactory.Options,
-        reqHeight: Int,
-        reqWidth: Int
+        reqWidth: Int,
+        reqHeight: Int
     ): Int {
         val height = options.outHeight
         val width = options.outWidth
@@ -110,10 +105,20 @@ class MovieFragment(val simpleMovie: SimpleMovie, val position: Int) : Fragment(
             val halfWidth = width / 2
 
             while (halfHeight / samplsSize >= reqHeight && halfWidth / samplsSize >= reqWidth) {
-                samplsSize*=2
+                samplsSize *= 2
             }
         }
         return samplsSize
+    }
+
+    companion object{
+        val maxMemory = Runtime.getRuntime().maxMemory().toInt()
+        val cacheSize = maxMemory / 8
+        val memoryCache = object : LruCache<String, Bitmap>(cacheSize){
+            override fun sizeOf(key: String?, bitmap: Bitmap): Int {
+                return bitmap.byteCount / 1024
+            }
+        }
     }
 
 
