@@ -24,8 +24,7 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
     private var binding: FragmentMoviemainBinding? = null
     private lateinit var movieMainPagerAdapter: MovieMainPagerAdapter
     private lateinit var movieMainViewModel: MovieMainViewModel
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    @Inject lateinit var viewModelFactory: ViewModelFactory
     private var isMenuOpen: Boolean = false
     private lateinit var menuTextView: TextView
     private lateinit var translateTop: Animation
@@ -102,7 +101,7 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
     }
 
     private fun initViews() {
-        movieMainPagerAdapter = MovieMainPagerAdapter(this)
+        movieMainPagerAdapter = MovieMainPagerAdapter(childFragmentManager)
         binding?.let {
             it.viewPager.adapter = movieMainPagerAdapter
         }
@@ -122,7 +121,6 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
 
         movieMainViewModel.getSimpleMoviesLiveData().observe(viewLifecycleOwner, {
             movieMainPagerAdapter.addItems(it)
-            movieMainPagerAdapter.notifyDataSetChanged()
         })
 
         movieMainViewModel.getSortNameLiveData().observe(viewLifecycleOwner, {

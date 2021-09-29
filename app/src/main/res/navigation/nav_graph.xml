@@ -3,10 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/movieMainFragment">
+    app:startDestination="@id/nav_movie">
     <fragment
-        android:id="@+id/movieMainFragment"
+        android:id="@+id/nav_movie"
         android:name="ows.kotlinstudy.movierankapp.view.MovieMainFragment"
-        android:label="MovieMainFragment"
-        tools:layout="@layout/fragment_moviemain"/>
+        android:label="영화 목록"
+        tools:layout="@layout/fragment_moviemain" />
+    <fragment
+        android:id="@+id/nav_moviedetail"
+        android:name="ows.kotlinstudy.movierankapp.view.MovieDetailFragment"
+        android:label="영화 상세"
+        tools:layout="@layout/fragment_moviedetail" />
 </navigation>
