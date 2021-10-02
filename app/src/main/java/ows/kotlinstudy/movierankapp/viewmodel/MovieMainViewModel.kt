@@ -25,7 +25,7 @@ class MovieMainViewModel @Inject constructor(
     fun requestSimpleMovieList(type: Int = DEFAULT_TYPE) {
         viewModelScope.launch {
             loadingLiveData.value = true
-            val response = repository.requestMovieList(type)
+            val response = repository.requestSimpleMovieList(type)
 
             if (response.code == 1) {
                 response.data?.let {

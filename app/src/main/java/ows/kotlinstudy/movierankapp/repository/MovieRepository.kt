@@ -3,6 +3,8 @@ package ows.kotlinstudy.movierankapp.repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ows.kotlinstudy.movierankapp.NetworkStatus
+import ows.kotlinstudy.movierankapp.response.MovieCommentResponse
+import ows.kotlinstudy.movierankapp.response.MovieDetailResponse
 import ows.kotlinstudy.movierankapp.response.MovieListResponse
 import javax.inject.Inject
 
@@ -12,24 +14,55 @@ class MovieRepository @Inject constructor(
 ){
     @Inject lateinit var networkStatus: NetworkStatus
 
-    suspend fun requestMovieList(type: Int) : ResponseResult<MovieListResponse>{
+    suspend fun requestSimpleMovieList(type: Int) : ResponseResult<MovieListResponse>{
+        /**
+         * fetch in LocalDataSource
+         */
         if(networkStatus == NetworkStatus.NOT_CONNECTED){
-            return requestLocalDataSource(type)
+            return localDataSource.fecthSimpleMovieList(type)
         }
-        return requestRemoteDataSource(type)
-    }
 
-    suspend fun requestRemoteDataSource(type: Int) : ResponseResult<MovieListResponse>{
-        val response = remoteDataSource.fecthMovieList(type)
-
+        /**
+         * fetch in RemoteDataSource
+          */
+        val response = remoteDataSource.fecthSimpleMovieList(type)
         if(response.isSuccessful){
-            localDataSource.insertMovieList(response.body()?.result)
+            localDataSource.insertSimpleMovieList(response.body()?.result)
             return ResponseResult.Success(response.body(), 1)
         }
         return ResponseResult.Fail(response.body(), 2)
     }
 
-    suspend fun requestLocalDataSource(type: Int) : ResponseResult<MovieListResponse>{
-        return localDataSource.fecthMovieList(type)
+    suspend fun requestMovieDetail(id : Int) : ResponseResult<MovieDetailResponse>{
+        /**
+         * fetch in LocalDataSource
+         */
+        if(networkStatus == NetworkStatus.NOT_CONNECTED){
+            return localDataSource.fetchMovieDetail(id)
+        }
+
+        /**
+         * fetch in RemoteDataSource
+         */
+        val response = remoteDataSource.fetchMovieDetail(id)
+        if(response.isSuccessful){
+            localDataSource.insertMovieDetail(response.body()?.result?.first())
+            return ResponseResult.Success(response.body(),1)
+        }
+        return ResponseResult.Fail(response.body(), 2)
     }
+
+//    suspend fun requestComment(id : Int, limit : Int) : ResponseResult<MovieCommentResponse>{
+//        /**
+//         * fetch in LocalDataSource
+//         */
+//        if(networkStatus == NetworkStatus.NOT_CONNECTED){
+//            return localDataSource.fetchMovieComment(id, limit)
+//        }
+//
+//        /**
+//         * fetch in RemoteDataSource
+//         */
+//        val response = remoteDataSource.fecthMovieComment(id, limit)
+//    }
 }

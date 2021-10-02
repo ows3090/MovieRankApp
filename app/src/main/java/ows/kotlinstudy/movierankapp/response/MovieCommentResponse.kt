@@ -3,13 +3,15 @@ package ows.kotlinstudy.movierankapp.response
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieDetailResponse(
+data class MovieCommentResponse(
     @SerializedName("code")
-    val code: Int = 0,
+    val code: Int?,
     @SerializedName("message")
-    val message: String = "",
+    val message: String?,
     @SerializedName("result")
-    val result: List<Movie>?,
+    val result: List<Comment>?,
     @SerializedName("resultType")
-    val resultType: String = ""
+    val resultType: String?,
+    @SerializedName("totalCount")
+    val totalCount: Int?
 )

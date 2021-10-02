@@ -39,4 +39,8 @@ class MovieDetailFragment : Fragment() {
     private fun initView(){
 
     }
+
+    private fun bindView(){
+
+    }
 }

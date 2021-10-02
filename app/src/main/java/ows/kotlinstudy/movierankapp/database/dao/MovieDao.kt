@@ -4,16 +4,14 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import ows.kotlinstudy.movierankapp.response.SimpleMovie
+import ows.kotlinstudy.movierankapp.response.Movie
 
 @Dao
 interface MovieDao {
-    @Query("SELECT * FROM SimpleMovie")
-    fun getAll() : List<SimpleMovie>
 
-    @Insert (onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovie(simpleMovie: SimpleMovie)
+    @Query("SELECT * FROM Movie WHERE id = :id")
+    fun getAll(id : Int) : List<Movie>
 
-    @Insert( onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllMovie(items : List<SimpleMovie>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMovie(movie: Movie)
 }
