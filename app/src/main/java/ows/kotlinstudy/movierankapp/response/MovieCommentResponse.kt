@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 
 data class MovieCommentResponse(
     @SerializedName("code")
-    val code: Int?,
+    val code: Int = 0,
     @SerializedName("message")
-    val message: String?,
+    val message: String = "",
     @SerializedName("result")
     val result: List<Comment>?,
     @SerializedName("resultType")
-    val resultType: String?,
+    val resultType: String = "",
     @SerializedName("totalCount")
-    val totalCount: Int?
+    val totalCount: Int = 0
 )

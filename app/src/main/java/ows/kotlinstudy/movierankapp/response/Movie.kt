@@ -55,8 +55,9 @@ data class Movie(
     val grade: Int?,
 
     @PrimaryKey
+    @Nullable
     @SerializedName("id")
-    val id: Int,
+    val id: Int?,
 
     @ColumnInfo(name = "image")
     @Nullable

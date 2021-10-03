@@ -4,10 +4,7 @@ import androidx.room.RoomDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ows.kotlinstudy.movierankapp.database.MovieDatabase
-import ows.kotlinstudy.movierankapp.response.Movie
-import ows.kotlinstudy.movierankapp.response.MovieDetailResponse
-import ows.kotlinstudy.movierankapp.response.MovieListResponse
-import ows.kotlinstudy.movierankapp.response.SimpleMovie
+import ows.kotlinstudy.movierankapp.response.*
 import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(
@@ -54,6 +51,29 @@ class LocalDataSource @Inject constructor(
             if(database is MovieDatabase){
                 movie?.let {
                     database.movieDao().insertMovie(it)
+                }
+            }
+        }
+    }
+
+    suspend fun fetchCommentList(id : Int, limit: Int) : ResponseResult<MovieCommentResponse>{
+        return withContext(Dispatchers.IO){
+            if(database is MovieDatabase){
+                val response = MovieCommentResponse(
+                    result = database.commentDao().getAll(id).subList(0,limit)
+                )
+                ResponseResult.Success(response,1)
+            }else{
+                ResponseResult.Fail(null,2)
+            }
+        }
+    }
+
+    suspend fun insertCommentList(comments : List<Comment>?){
+        return withContext(Dispatchers.IO){
+            if(database is MovieDatabase){
+                comments?.let {
+                    database.commentDao().insertAllComment(it)
                 }
             }
         }
