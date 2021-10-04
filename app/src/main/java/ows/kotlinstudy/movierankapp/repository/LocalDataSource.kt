@@ -56,11 +56,11 @@ class LocalDataSource @Inject constructor(
         }
     }
 
-    suspend fun fetchCommentList(id : Int, limit: Int) : ResponseResult<MovieCommentResponse>{
+    suspend fun fetchCommentList(id : Int) : ResponseResult<MovieCommentResponse>{
         return withContext(Dispatchers.IO){
             if(database is MovieDatabase){
                 val response = MovieCommentResponse(
-                    result = database.commentDao().getAll(id).subList(0,limit)
+                    result = database.commentDao().getAll(id)
                 )
                 ResponseResult.Success(response,1)
             }else{

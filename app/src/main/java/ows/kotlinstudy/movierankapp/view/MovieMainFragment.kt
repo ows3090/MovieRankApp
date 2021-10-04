@@ -115,15 +115,15 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
     }
 
     private fun bindViews() {
-        movieMainViewModel.getLoadingLiveData().observe(viewLifecycleOwner, {
+        movieMainViewModel.loadingLiveData.observe(viewLifecycleOwner, {
             binding?.progresBar?.isVisible = it
         })
 
-        movieMainViewModel.getSimpleMoviesLiveData().observe(viewLifecycleOwner, {
+        movieMainViewModel.simpleMoviseLiveData.observe(viewLifecycleOwner, {
             movieMainPagerAdapter.addItems(it)
         })
 
-        movieMainViewModel.getSortNameLiveData().observe(viewLifecycleOwner, {
+        movieMainViewModel.sortNameLiveData.observe(viewLifecycleOwner, {
             menuTextView.text = it
         })
     }

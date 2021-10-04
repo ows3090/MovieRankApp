@@ -20,12 +20,12 @@ class DBModule {
             movieApplication.applicationContext,
             MovieDatabase::class.java,
             "Movie-Database"
-        ).addMigrations(provideRoomMigration()).build()
+        ).build()
     }
 
     @Provides
     fun provideRoomMigration(): Migration {
-        return object : Migration(1, 2) {
+        return object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL(
                     "CREATE TABLE `Movie` (" +

@@ -23,9 +23,9 @@ class RemoteDataSource @Inject constructor(
       }
    }
 
-   suspend fun fecthCommentList(id : Int, limit : Int) : Response<MovieCommentResponse>{
+   suspend fun fecthCommentList(id : Int) : Response<MovieCommentResponse>{
       return withContext(Dispatchers.IO){
-         movieService.requestMovieCommentListForCoroutine(id, limit)
+         movieService.requestMovieCommentListForCoroutine(id)
       }
    }
 }

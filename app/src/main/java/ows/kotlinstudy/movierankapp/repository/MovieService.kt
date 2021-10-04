@@ -18,5 +18,5 @@ interface MovieService {
     suspend fun requestMovieDetailForCoroutine(@Query("id") id : Int) : Response<MovieDetailResponse>
 
     @GET("readCommentList")
-    suspend fun requestMovieCommentListForCoroutine(@Query("id") id : Int, @Query("limit") limit : Int) : Response<MovieCommentResponse>
+    suspend fun requestMovieCommentListForCoroutine(@Query("id") id : Int) : Response<MovieCommentResponse>
 }

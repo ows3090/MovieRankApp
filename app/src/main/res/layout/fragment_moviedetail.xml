@@ -43,12 +43,12 @@
 
                 <ImageView
                     android:id="@+id/ageImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="40dp"
+                    app:layout_constraintBottom_toBottomOf="@id/titleTextView"
                     app:layout_constraintStart_toEndOf="@id/titleTextView"
-                    app:layout_constraintTop_toTopOf="@id/movieImageView"
+                    app:layout_constraintTop_toTopOf="@id/titleTextView"
                     tools:src="@drawable/ic_15" />
 
                 <TextView
@@ -203,16 +203,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="8dp"
                         android:textColor="#6F6E6E"
                         android:textSize="16sp"
                         android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/movieRatingBar"
                         app:layout_constraintStart_toEndOf="@id/movieRatingBar"
-                        app:layout_constraintTop_toBottomOf="@id/movieRatingTextView"
+                        app:layout_constraintTop_toTopOf="@id/movieRatingBar"
                         tools:text="8.2" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -258,10 +262,10 @@
                     android:id="@+id/movieStoryTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/moviestory_text"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    tools:text="@string/moviestory_text" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/movieStoryDetailTextView"
@@ -272,70 +276,79 @@
                     tools:text="@string/moviestorydetail_text" />
             </LinearLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <HorizontalScrollView
                 android:layout_marginTop="15dp"
-                android:background="@color/white"
-                android:padding="15dp">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/movieDirectorAndPerformerTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/moviedirectorandperformer_text" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:padding="15dp">
 
-                <TextView
-                    android:id="@+id/movieDirectorTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/movieDirectorAndPerformerTextView"
-                    tools:text="@string/moviedirector_text" />
+                    <TextView
+                        android:id="@+id/movieDirectorAndPerformerTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/moviedirectorandperformer_text"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/movieDirectorResultTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@id/movieDirectorTextView"
-                    app:layout_constraintTop_toBottomOf="@id/movieDirectorAndPerformerTextView"
-                    tools:text="@string/moviedirectorresult_text" />
+                    <TextView
+                        android:id="@+id/movieDirectorTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/moviedirector_text"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/movieDirectorAndPerformerTextView" />
 
-                <TextView
-                    android:id="@+id/moviePerformerTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/movieDirectorTextView"
-                    tools:text="@string/movieperformer_text" />
+                    <TextView
+                        android:id="@+id/movieDirectorResultTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toEndOf="@id/movieDirectorTextView"
+                        app:layout_constraintTop_toBottomOf="@id/movieDirectorAndPerformerTextView"
+                        tools:text="@string/moviedirectorresult_text" />
 
-                <TextView
-                    android:id="@+id/moviePerformerResultTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@id/moviePerformerTextView"
-                    app:layout_constraintTop_toBottomOf="@id/movieDirectorTextView"
-                    tools:text="@string/movieperformerresult_text" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/moviePerformerTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/movieperformer_text"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/movieDirectorTextView" />
+
+                    <TextView
+                        android:id="@+id/moviePerformerResultTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toEndOf="@id/moviePerformerTextView"
+                        app:layout_constraintTop_toBottomOf="@id/movieDirectorTextView"
+                        tools:text="@string/movieperformerresult_text" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </HorizontalScrollView>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -348,12 +361,12 @@
                     android:id="@+id/movieGalleryTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/moviegallery_text"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/moviegallery_text" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/movieGalleryRecyclerView"
@@ -379,12 +392,12 @@
                     android:id="@+id/movieSummaryTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/moviesummary_text"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/moviesummary_text" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/writeButton"

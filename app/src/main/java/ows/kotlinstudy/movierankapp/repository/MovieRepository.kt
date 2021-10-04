@@ -52,18 +52,18 @@ class MovieRepository @Inject constructor(
         return ResponseResult.Fail(response.body(), 2)
     }
 
-    suspend fun requestCommentList(id : Int, limit : Int) : ResponseResult<MovieCommentResponse>{
+    suspend fun requestCommentList(id : Int) : ResponseResult<MovieCommentResponse>{
         /**
          * fetch in LocalDataSource
          */
         if(networkStatus == NetworkStatus.NOT_CONNECTED){
-            return localDataSource.fetchCommentList(id, limit)
+            return localDataSource.fetchCommentList(id)
         }
 
         /**
          * fetch in RemoteDataSource
          */
-        val response = remoteDataSource.fecthCommentList(id, limit)
+        val response = remoteDataSource.fecthCommentList(id)
         if(response.isSuccessful){
             localDataSource.insertCommentList(response.body()?.result)
             return ResponseResult.Success(response.body(), 1)

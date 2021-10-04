@@ -69,7 +69,7 @@ class MovieFragment(var simpleMovie: SimpleMovie, val position: Int) : Fragment(
         binding?.let { binding ->
             binding.movieNameTextView.text = "${position + 1}. ${simpleMovie.title}"
             binding.movieInfoTextView.text =
-                "예매율 ${simpleMovie.reservationRate}% | ${simpleMovie.grade}세 관람가 | 개봉일 : ${simpleMovie.date}"
+                "예매율 ${simpleMovie.reservationRate}% | ${simpleMovie.grade}세 관람가 | 개봉일 : ${simpleMovie.date.replace('-','.')}"
 
             Glide.with(binding.movieImageView.rootView)
                 .load(simpleMovie.image)

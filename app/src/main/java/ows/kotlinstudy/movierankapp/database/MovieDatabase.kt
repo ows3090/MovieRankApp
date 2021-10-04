@@ -9,7 +9,7 @@ import ows.kotlinstudy.movierankapp.database.dao.SimpleMovieDao
 import ows.kotlinstudy.movierankapp.response.Comment
 import ows.kotlinstudy.movierankapp.response.Movie
 
-@Database(entities = arrayOf(SimpleMovie::class, Movie::class, Comment::class), version = 2)
+@Database(entities = arrayOf(SimpleMovie::class, Movie::class, Comment::class), version = 1)
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun simpleMovieDao() : SimpleMovieDao
     abstract fun movieDao() : MovieDao
