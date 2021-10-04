@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import ows.kotlinstudy.movierankapp.databinding.GalleryViewBinding
+import ows.kotlinstudy.movierankapp.databinding.GalleryItemBinding
 import ows.kotlinstudy.movierankapp.repository.Url.GALLERY_DEFAULT_URL
 
 class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() {
 
     private val galleries = ArrayList<String>()
 
-    inner class GalleryViewHolder(val binding : GalleryViewBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class GalleryViewHolder(val binding : GalleryItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(url : String){
             binding.playImageView.isVisible = url.contains(GALLERY_DEFAULT_URL)
 
@@ -22,7 +22,7 @@ class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() 
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryViewHolder {
-        return GalleryViewHolder(GalleryViewBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return GalleryViewHolder(GalleryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: GalleryViewHolder, position: Int) {

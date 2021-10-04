@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="ows.kotlinstudy.movierankapp.viewmodel.MovieDetailViewModel" />
+    </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,14 +26,25 @@
                 android:background="@drawable/mainmovie_background"
                 android:padding="15dp">
 
+                <ProgressBar
+                    android:id="@+id/progresBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible" />
+
                 <ImageView
                     android:id="@+id/movieImageView"
                     android:layout_width="140dp"
                     android:layout_height="200dp"
-                    android:src="@drawable/image11"
+                    app:imageUrl="@{viewmodel.movieLiveData.image}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/image11" />
 
                 <TextView
                     android:id="@+id/titleTextView"
@@ -34,6 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="40dp"
+                    android:text="@{viewmodel.movieLiveData.title}"
                     android:textColor="@color/white"
                     android:textSize="23sp"
                     android:textStyle="bold"
@@ -46,6 +65,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginLeft="10dp"
+                    app:grade="@{viewmodel.movieLiveData.grade}"
                     app:layout_constraintBottom_toBottomOf="@id/titleTextView"
                     app:layout_constraintStart_toEndOf="@id/titleTextView"
                     app:layout_constraintTop_toTopOf="@id/titleTextView"
@@ -57,6 +77,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="15dp"
+                    android:text="@{viewmodel.movieLiveData.date.replace('-','.') + ` 개봉`}"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -70,6 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="5dp"
+                    android:text="@{viewmodel.movieLiveData.genre + ` / ` + String.valueOf(viewmodel.movieLiveData.duration) + `분`}"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -93,6 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="22dp"
+                    android:text="@{String.valueOf(viewmodel.movieLiveData.like)}"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -116,6 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="22dp"
+                    android:text="@{String.valueOf(viewmodel.movieLiveData.dislike)}"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -152,6 +176,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:text="@{String.valueOf(viewmodel.movieLiveData.grade) + `위 ` + String.valueOf(viewmodel.movieLiveData.reservationRate) + `%`}"
                         android:textColor="#6F6E6E"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -194,6 +219,7 @@
                         android:layout_marginEnd="10dp"
                         android:isIndicator="false"
                         android:numStars="5"
+                        android:rating="@{Float.valueOf(String.valueOf(viewmodel.movieLiveData.userRating))}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/movieRatingTextView"
                         tools:rating="3.4" />
@@ -203,6 +229,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:text="@{String.valueOf(viewmodel.movieLiveData.userRating)}"
                         android:textColor="#6F6E6E"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -243,6 +270,7 @@
                         android:textColor="#6F6E6E"
                         android:textSize="16sp"
                         android:textStyle="bold"
+                        app:decimalformat="@{viewmodel.movieLiveData.audience}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/movieAudienceTextView"
@@ -271,15 +299,16 @@
                     android:id="@+id/movieStoryDetailTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{viewmodel.movieLiveData.synopsis}"
                     android:textColor="#6F6E6E"
                     android:textSize="16sp"
                     tools:text="@string/moviestorydetail_text" />
             </LinearLayout>
 
             <HorizontalScrollView
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -315,6 +344,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="10dp"
+                        android:text="@{viewmodel.movieLiveData.director}"
                         android:textColor="@android:color/darker_gray"
                         android:textSize="18sp"
                         app:layout_constraintStart_toEndOf="@id/movieDirectorTextView"
@@ -341,6 +371,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:singleLine="true"
+                        android:text="@{viewmodel.movieLiveData.actor}"
                         android:textColor="@android:color/darker_gray"
                         android:textSize="18sp"
                         app:layout_constraintStart_toEndOf="@id/moviePerformerTextView"
@@ -479,7 +510,6 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </LinearLayout>
     </ScrollView>
 </layout>

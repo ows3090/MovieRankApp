@@ -13,6 +13,7 @@ class MovieMainViewModel @Inject constructor(
     val repository: MovieRepository
 ) : ViewModel() {
     private val DEFAULT_TYPE = 1
+
     private val simpleMoviesMutableLiveData = MutableLiveData<List<SimpleMovie>>()
     val simpleMoviseLiveData: LiveData<List<SimpleMovie>>
         get() = simpleMoviesMutableLiveData

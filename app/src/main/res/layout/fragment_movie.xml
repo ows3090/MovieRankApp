@@ -23,24 +23,24 @@
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@id/movieImageView"
             app:layout_constraintEnd_toEndOf="@id/movieImageView"
             app:layout_constraintStart_toStartOf="@id/movieImageView"
             app:layout_constraintTop_toTopOf="@id/movieImageView"
-            tools:visibility="visible"
-            android:visibility="visible"/>
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/movieNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:text="@string/movie_name"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/movieImageView" />
+            app:layout_constraintTop_toBottomOf="@id/movieImageView"
+            tools:text="@string/movie_name" />
 
         <ImageView
             android:id="@+id/lineImagView"

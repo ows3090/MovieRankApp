@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -27,8 +28,10 @@ class MovieDetailFragment : Fragment() {
 
     private var binding: FragmentMoviedetailBinding? = null
     private lateinit var movieDetailViewModel: MovieDetailViewModel
-    @Inject lateinit var viewModelFactory: ViewModelFactory
-    private val movieId : Int by lazy { arguments?.getInt(MOVIEID, 0) ?: 0}
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val movieId: Int by lazy { arguments?.getInt(MOVIEID, 0) ?: 0 }
     private val galleryAdapter by lazy { GalleryAdapter() }
 
     override fun onCreateView(
@@ -39,7 +42,10 @@ class MovieDetailFragment : Fragment() {
         val fragmentMovieDetailBinding: FragmentMoviedetailBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_moviedetail, container, false)
         binding = fragmentMovieDetailBinding
+
         initViewModel()
+        fragmentMovieDetailBinding.viewmodel = movieDetailViewModel
+        fragmentMovieDetailBinding.lifecycleOwner = this
 
         return fragmentMovieDetailBinding.root
     }
@@ -68,77 +74,51 @@ class MovieDetailFragment : Fragment() {
             ViewModelProvider(this, viewModelFactory).get(MovieDetailViewModel::class.java)
     }
 
-    private fun initViews(){
+    private fun initViews() {
         binding?.let {
             it.movieGalleryRecyclerView.apply {
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                 adapter = galleryAdapter
             }
         }
     }
 
     private fun bindViews() {
-        movieDetailViewModel.movieLiveData.observe(viewLifecycleOwner){
-            setMovieDetailInfo(it)
+        movieDetailViewModel.movieLiveData.observe(viewLifecycleOwner) {
             setGalleryList(it)
         }
 
-        movieDetailViewModel.commentListLiveData.observe(viewLifecycleOwner){
+        movieDetailViewModel.loadingLiveData.observe(viewLifecycleOwner) { check ->
+            binding?.let {
+                it.progresBar.isVisible = check
+                it.titleTextView.isVisible = !check
+                it.movieInfoTextView.isVisible = !check
+                it.movieOtherInfoTextView.isVisible = !check
+                it.movieImageView.isVisible = !check
+                it.ageImageView.isVisible = !check
+                it.likeButton.isVisible = !check
+                it.dislikeButton.isVisible = !check
+                it.likeCountTextView.isVisible = !check
+                it.dislikeCountTextView.isVisible = !check
+            }
+        }
+
+        movieDetailViewModel.commentListLiveData.observe(viewLifecycleOwner) {
             setCommentList(it)
         }
     }
 
-    private fun loadMovieDetailInfo(){
+    private fun loadMovieDetailInfo() {
         movieDetailViewModel.requestMovieDetail(movieId)
     }
 
-    private fun loadCommentList(){
+    private fun loadCommentList() {
         movieDetailViewModel.requestCommentList(movieId)
     }
 
-    private fun setMovieDetailInfo(movie : Movie) = binding?.let {
-        Glide.with(it.movieImageView.context)
-            .load(movie.image)
-            .into(it.movieImageView)
-        it.titleTextView.text = movie.title
-        setMovieGradeInfo(movie.grade)
 
-        it.movieInfoTextView.text = "${movie.date?.replace('-','.')} 개봉"
-        it.movieOtherInfoTextView.text = "${movie.genre} / ${movie.duration}분"
-        it.likeCountTextView.text = "${movie.like}"
-        it.dislikeCountTextView.text = "${movie.dislike}"
-        it.movieReservationResultTextView.text = "${movie.reservationGrade}위 ${movie.reservationRate}%"
-        it.movieRatingBar.rating = movie.userRating.toFloat()
-        it.movieRatingResultTextView.text = "${movie.userRating}"
-        it.movieAudienceResultTextView.text = "${DecimalFormat("#,###").format(movie.audience)}명"
-        it.movieStoryDetailTextView.text = movie.synopsis
-        it.movieDirectorResultTextView.text = movie.director
-        it.moviePerformerResultTextView.text = movie.actor
-    }
-
-    private fun setMovieGradeInfo(grade : Int){
-        binding?.let {
-            when(grade){
-                12 -> Glide.with(it.ageImageView.context)
-                    .load(R.drawable.ic_12)
-                    .into(it.ageImageView)
-
-                15 -> Glide.with(it.ageImageView.context)
-                    .load(R.drawable.ic_15)
-                    .into(it.ageImageView)
-
-                19 -> Glide.with(it.ageImageView.context)
-                    .load(R.drawable.ic_19)
-                    .into(it.ageImageView)
-
-                else -> Glide.with(it.ageImageView.context)
-                    .load(R.drawable.ic_all)
-                    .into(it.ageImageView)
-            }
-        }
-    }
-
-    private fun setGalleryList(movie : Movie){
+    private fun setGalleryList(movie: Movie) {
         galleryAdapter.clearItems()
 
         movie.videos?.let {
@@ -154,7 +134,7 @@ class MovieDetailFragment : Fragment() {
         galleryAdapter.notifyDataSetChanged()
     }
 
-    private fun setCommentList(comments : List<Comment>){
+    private fun setCommentList(comments: List<Comment>) {
 
     }
 }

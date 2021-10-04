@@ -14,9 +14,8 @@ data class Movie(
     val actor: String,
 
     @ColumnInfo(name = "audience")
-    @Nullable
     @SerializedName("audience")
-    val audience: Int?,
+    val audience: Int,
 
     @ColumnInfo(name = "audience_rating")
     @Nullable
@@ -24,9 +23,8 @@ data class Movie(
     val audienceRating: Double?,
 
     @ColumnInfo(name = "date")
-    @Nullable
     @SerializedName("date")
-    val date: String?,
+    val date: String,
 
     @ColumnInfo(name = "director")
     @SerializedName("director")
