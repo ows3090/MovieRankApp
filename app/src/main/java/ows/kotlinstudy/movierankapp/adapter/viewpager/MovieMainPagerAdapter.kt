@@ -13,7 +13,6 @@ class MovieMainPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAda
     private val fragmentList: ArrayList<MovieFragment> = arrayListOf()
 
     fun addItems(items: List<SimpleMovie>) {
-        Log.d("msg","addItems")
         simpleMovies.clear()
         simpleMovies.addAll(items)
         notifyDataSetChanged()

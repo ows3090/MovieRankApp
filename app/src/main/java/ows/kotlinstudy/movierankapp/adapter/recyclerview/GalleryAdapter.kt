@@ -1,5 +1,6 @@
 package ows.kotlinstudy.movierankapp.adapter.recyclerview
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ows.kotlinstudy.movierankapp.databinding.GalleryItemBinding
 import ows.kotlinstudy.movierankapp.repository.Url.GALLERY_DEFAULT_URL
+import ows.kotlinstudy.movierankapp.repository.Url.VIDEO_URL
 
 class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() {
 
@@ -14,11 +16,16 @@ class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() 
 
     inner class GalleryViewHolder(val binding : GalleryItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(url : String){
-            binding.playImageView.isVisible = url.contains(GALLERY_DEFAULT_URL)
-
-            Glide.with(binding.galleryImageView.context)
-                .load(url)
-                .into(binding.galleryImageView)
+            binding.playImageView.isVisible = url.contains(VIDEO_URL)
+            if(binding.playImageView.isVisible){
+                Glide.with(binding.galleryImageView.context)
+                    .load(GALLERY_DEFAULT_URL + url.substring(17)+"/0.jpg")
+                    .into(binding.galleryImageView)
+            }else{
+                Glide.with(binding.galleryImageView.context)
+                    .load(url)
+                    .into(binding.galleryImageView)
+            }
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryViewHolder {

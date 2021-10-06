@@ -85,13 +85,10 @@ class MovieDetailFragment : Fragment() {
     }
 
     private fun bindViews() {
-        movieDetailViewModel.movieLiveData.observe(viewLifecycleOwner) {
-            setGalleryList(it)
-        }
-
         movieDetailViewModel.loadingLiveData.observe(viewLifecycleOwner) { check ->
             binding?.let {
                 it.progresBar.isVisible = check
+                it.movieStoryProgressBar.isVisible = check
                 it.titleTextView.isVisible = !check
                 it.movieInfoTextView.isVisible = !check
                 it.movieOtherInfoTextView.isVisible = !check
@@ -101,11 +98,8 @@ class MovieDetailFragment : Fragment() {
                 it.dislikeButton.isVisible = !check
                 it.likeCountTextView.isVisible = !check
                 it.dislikeCountTextView.isVisible = !check
+                it.movieStoryDetailTextView.isVisible = !check
             }
-        }
-
-        movieDetailViewModel.commentListLiveData.observe(viewLifecycleOwner) {
-            setCommentList(it)
         }
     }
 
@@ -115,26 +109,5 @@ class MovieDetailFragment : Fragment() {
 
     private fun loadCommentList() {
         movieDetailViewModel.requestCommentList(movieId)
-    }
-
-
-    private fun setGalleryList(movie: Movie) {
-        galleryAdapter.clearItems()
-
-        movie.videos?.let {
-            galleryAdapter.addMovieItems(it.split(",").map {
-                GALLERY_DEFAULT_URL + it.substring(17) + "/0.jpg"
-            } as ArrayList<String>)
-        }
-
-        movie.photos?.let {
-            galleryAdapter.addGalleryItems(it.split(",") as ArrayList<String>)
-        }
-
-        galleryAdapter.notifyDataSetChanged()
-    }
-
-    private fun setCommentList(comments: List<Comment>) {
-
     }
 }

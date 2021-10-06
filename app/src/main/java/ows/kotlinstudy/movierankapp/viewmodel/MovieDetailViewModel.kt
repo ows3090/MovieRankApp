@@ -9,9 +9,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 import ows.kotlinstudy.movierankapp.R
+import ows.kotlinstudy.movierankapp.adapter.recyclerview.GalleryAdapter
 import ows.kotlinstudy.movierankapp.repository.MovieRepository
 import ows.kotlinstudy.movierankapp.response.Comment
 import ows.kotlinstudy.movierankapp.response.Movie
@@ -102,8 +105,24 @@ class MovieDetailViewModel @Inject constructor(
         fun setDecimalformatText(view: TextView, audience : Int){
             view.text = "${DecimalFormat("#,###").format(audience)}명"
         }
+
+        @JvmStatic
+        @BindingAdapter("gallerylist")
+        fun setGalleryRecyclerView(recylcerView: RecyclerView, items : String?){
+            if(recylcerView.adapter == null){
+                recylcerView.also {
+                    it.layoutManager = LinearLayoutManager(recylcerView.context, LinearLayoutManager.HORIZONTAL, false)
+                    it.adapter = GalleryAdapter()
+                }
+            }
+            items?.let {
+                val list = it.split(",") as ArrayList<String>
+                with(recylcerView.adapter as GalleryAdapter){
+                    clearItems()
+                    addMovieItems(list)
+                    notifyDataSetChanged()
+                }
+            }
+        }
     }
-
-
-
 }
