@@ -10,35 +10,35 @@ import com.google.gson.annotations.SerializedName
 data class Comment(
     @ColumnInfo(name = "contents")
     @SerializedName("contents")
-    val contents: String?,
+    val contents: String,
 
     @PrimaryKey
     @SerializedName("id")
-    val id: Int?,
+    val id: Int,
 
     @ColumnInfo(name = "movieId")
     @SerializedName("movieId")
-    val movieId: Int?,
+    val movieId: Int,
 
     @ColumnInfo(name = "rating")
     @SerializedName("rating")
-    val rating: Double?,
+    val rating: Double,
 
     @ColumnInfo(name = "recommend")
     @SerializedName("recommend")
-    val recommend: Int?,
+    val recommend: Int,
 
     @ColumnInfo(name = "time")
     @SerializedName("time")
-    val time: String?,
+    val time: String,
 
     @ColumnInfo(name = "timestamp")
     @SerializedName("timestamp")
-    val timestamp: Int?,
+    val timestamp: Int,
 
     @ColumnInfo(name = "writer")
     @SerializedName("writer")
-    val writer: String?,
+    val writer: String,
 
     @ColumnInfo(name = "writer_image")
     @SerializedName("writer_image")

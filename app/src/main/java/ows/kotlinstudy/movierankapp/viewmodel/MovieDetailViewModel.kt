@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 import ows.kotlinstudy.movierankapp.R
+import ows.kotlinstudy.movierankapp.adapter.recyclerview.CommentAdapter
 import ows.kotlinstudy.movierankapp.adapter.recyclerview.GalleryAdapter
 import ows.kotlinstudy.movierankapp.repository.MovieRepository
 import ows.kotlinstudy.movierankapp.response.Comment
 import ows.kotlinstudy.movierankapp.response.Movie
+import ows.kotlinstudy.movierankapp.response.MovieCommentResponse
 import java.text.DecimalFormat
 import javax.inject.Inject
 
@@ -29,10 +31,9 @@ class MovieDetailViewModel @Inject constructor(
     val movieLiveData: LiveData<Movie>
         get() = movieMutableLiveData
 
-    private var commentListMutableLiveData = MutableLiveData<List<Comment>>()
-    val commentListLiveData: LiveData<List<Comment>>
+    private var commentListMutableLiveData = MutableLiveData<MovieCommentResponse>()
+    val commentListLiveData: LiveData<MovieCommentResponse>
         get() = commentListMutableLiveData
-    private var commentList = listOf<Comment>()
 
     private val loadingMutableLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean>
@@ -60,10 +61,7 @@ class MovieDetailViewModel @Inject constructor(
 
             if (response.code == 1) {
                 response.data?.let {
-                    it.result?.let { comments ->
-                        commentList = comments
-                        commentListMutableLiveData.value = commentList
-                    }
+                    commentListMutableLiveData.value = it
                 }
             }
         }
@@ -120,6 +118,25 @@ class MovieDetailViewModel @Inject constructor(
                 with(recylcerView.adapter as GalleryAdapter){
                     clearItems()
                     addMovieItems(list)
+                    notifyDataSetChanged()
+                }
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("commentList")
+        fun setCommentListView(recyclerView: RecyclerView, items : List<Comment>?){
+            if(recyclerView.adapter == null){
+                recyclerView.also {
+                    it.layoutManager = LinearLayoutManager(recyclerView.context)
+                    it.adapter = CommentAdapter()
+                }
+            }
+
+            items?.let{
+                val list = ArrayList<Comment>(it.subList(0,2))
+                (recyclerView.adapter as CommentAdapter).run{
+                    addItems(list)
                     notifyDataSetChanged()
                 }
             }
