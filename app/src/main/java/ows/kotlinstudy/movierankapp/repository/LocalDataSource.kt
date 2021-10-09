@@ -1,5 +1,6 @@
 package ows.kotlinstudy.movierankapp.repository
 
+import android.util.Log
 import androidx.room.RoomDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

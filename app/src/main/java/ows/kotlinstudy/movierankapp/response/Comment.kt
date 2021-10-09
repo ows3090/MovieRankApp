@@ -1,11 +1,14 @@
 package ows.kotlinstudy.movierankapp.response
 
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity
 data class Comment(
     @ColumnInfo(name = "contents")
@@ -43,4 +46,4 @@ data class Comment(
     @ColumnInfo(name = "writer_image")
     @SerializedName("writer_image")
     val writerImage: String?
-)
+): Parcelable

@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieRankApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.GalleryActivity"></activity>
+        <activity android:name=".view.CommentActivity"
+            android:label="@string/comment_activity_name"/>
+        <activity android:name=".view.GalleryActivity" />
         <activity
             android:name=".view.MainActivity"
             android:label="@string/main_activity_name"

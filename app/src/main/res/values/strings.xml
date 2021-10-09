@@ -29,4 +29,5 @@
     <string name="writing_text">작성하기</string>
     <string name="allview_text">모두 보기</string>
     <string name="reservation_text">예매하기</string>
+    <string name="comment_activity_name">한줄평 목록</string>
 </resources>

@@ -23,6 +23,7 @@ class MovieMainViewModel @Inject constructor(
     val loadingLiveData: LiveData<Boolean>
         get() = loadingMutableLiveData
 
+    private var currentMenuType = 1
     private var sortNameMutableLiveData = MutableLiveData<String>()
     val sortNameLiveData: LiveData<String>
         get() = sortNameMutableLiveData
@@ -39,10 +40,12 @@ class MovieMainViewModel @Inject constructor(
                 }
             }
 
-            when (type) {
-                1 -> sortNameMutableLiveData.value = "예매율순"
-                2 -> sortNameMutableLiveData.value = "큐레이션"
-                3 -> sortNameMutableLiveData.value = "상영예정"
+            if(currentMenuType != type){
+                when (type) {
+                    1 -> sortNameMutableLiveData.value = "예매율순"
+                    2 -> sortNameMutableLiveData.value = "큐레이션"
+                    3 -> sortNameMutableLiveData.value = "상영예정"
+                }
             }
 
             loadingMutableLiveData.value = false

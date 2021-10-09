@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.CommentActivity">
+
+        <TextView
+            android:id="@+id/movieTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="영화명" />
+
+        <ImageView
+            android:id="@+id/gradeImageView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:maxWidth="40dp"
+            android:maxHeight="40dp"
+            android:minWidth="40dp"
+            android:minHeight="40dp"
+            app:layout_constraintBottom_toBottomOf="@id/movieTitleTextView"
+            app:layout_constraintStart_toEndOf="@id/movieTitleTextView"
+            app:layout_constraintTop_toTopOf="@id/movieTitleTextView"
+            tools:src="@drawable/ic_all" />
+
+        <View
+            android:id="@+id/borderView"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movieTitleTextView" />
+
+        <TextView
+            android:id="@+id/totalCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/borderView"
+            tools:text="(1,142명 참여)" />
+
+        <TextView
+            android:id="@+id/ratingTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@id/totalCountTextView"
+            app:layout_constraintTop_toBottomOf="@id/borderView"
+            tools:text="5.1" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:numStars="5"
+            app:layout_constraintBottom_toBottomOf="@id/ratingTextView"
+            app:layout_constraintEnd_toStartOf="@id/ratingTextView"
+            app:layout_constraintTop_toTopOf="@id/ratingTextView"
+            tools:rating="4.3" />
+
+        <View
+            android:id="@+id/borderView2"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="5dp"
+            android:background="#E6E6E6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/totalCountTextView" />
+
+        <TextView
+            android:id="@+id/commentTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="한줄평"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/movieTitleTextView"
+            app:layout_constraintTop_toBottomOf="@id/borderView2" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/writeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/writingbutton_background"
+            android:drawablePadding="5dp"
+            android:minHeight="0dp"
+            android:text="작성하기"
+            android:textColor="#ED6235"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/commentTextView"
+            app:layout_constraintEnd_toEndOf="@id/totalCountTextView"
+            app:layout_constraintTop_toTopOf="@id/commentTextView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/commentRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/writeButton"
+            app:layout_constraintStart_toStartOf="@id/commentTextView"
+            app:layout_constraintTop_toBottomOf="@id/commentTextView" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

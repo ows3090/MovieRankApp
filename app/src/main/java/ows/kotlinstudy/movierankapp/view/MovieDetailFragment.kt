@@ -1,5 +1,6 @@
 package ows.kotlinstudy.movierankapp.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,7 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import ows.kotlinstudy.movierankapp.Constants.COMMENTLIST
 import ows.kotlinstudy.movierankapp.Constants.MOVIEID
+import ows.kotlinstudy.movierankapp.Constants.MOVIEINFO
 import ows.kotlinstudy.movierankapp.R
 import ows.kotlinstudy.movierankapp.adapter.recyclerview.GalleryAdapter
 import ows.kotlinstudy.movierankapp.dagger.module.FragmentModule
@@ -100,6 +103,15 @@ class MovieDetailFragment : Fragment() {
                 it.dislikeCountTextView.isVisible = !check
                 it.movieStoryDetailTextView.isVisible = !check
             }
+        }
+
+        binding?.viewButton?.setOnClickListener {
+            startActivity(
+                Intent(requireContext(), CommentActivity::class.java).run {
+                    putExtra(MOVIEINFO, movieDetailViewModel.movieLiveData.value)
+                    putExtra(COMMENTLIST, movieDetailViewModel.commentListLiveData.value)
+                }
+            )
         }
     }
 

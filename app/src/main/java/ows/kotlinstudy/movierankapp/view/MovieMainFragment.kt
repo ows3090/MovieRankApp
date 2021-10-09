@@ -60,6 +60,7 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_moviesort, menu)
+        menuTextView = (menu.findItem(R.id.sortItem).actionView as LinearLayout).findViewById(R.id.menuTextView)
         (menu.findItem(R.id.sortItem).actionView as LinearLayout).run {
             setOnClickListener {
                 if (isMenuOpen) {
@@ -68,7 +69,6 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
                     binding?.menuLayout?.startAnimation(translateBottom)
                 }
             }
-            menuTextView = findViewById(R.id.menuTextView)
         }
         initMenuActionView()
     }
@@ -124,7 +124,7 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
         })
 
         movieMainViewModel.sortNameLiveData.observe(viewLifecycleOwner, {
-            menuTextView.text = it
+            //menuTextView.text = it
         })
     }
 
