@@ -47,7 +47,8 @@ class MovieDetailViewModel @Inject constructor(
             if (response.code == 1) {
                 response.data?.let {
                     it.result?.let { movies ->
-                        movieMutableLiveData.value = movies.first()
+                        if(movies.size > 0) movieMutableLiveData.value = movies.first()
+
                     }
                 }
             }
@@ -134,6 +135,8 @@ class MovieDetailViewModel @Inject constructor(
             }
 
             items?.let{
+                if(it.size == 0) return@let
+
                 val list = ArrayList<Comment>(it.subList(0,2))
                 (recyclerView.adapter as CommentAdapter).run{
                     addItems(list)

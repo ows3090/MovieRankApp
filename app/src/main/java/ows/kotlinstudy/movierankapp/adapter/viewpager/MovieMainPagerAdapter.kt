@@ -15,12 +15,17 @@ class MovieMainPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAda
     fun addItems(items: List<SimpleMovie>) {
         simpleMovies.clear()
         simpleMovies.addAll(items)
-        notifyDataSetChanged()
-
         for(i in 0 until fragmentList.size){
             fragmentList.get(i).simpleMovie = simpleMovies.get(i)
             fragmentList.get(i).notifyUpdate()
         }
+
+        if(simpleMovies.size > fragmentList.size){
+            for(i in fragmentList.size until  simpleMovies.size){
+                fragmentList.add(MovieFragment(simpleMovies.get(i),i))
+            }
+        }
+        notifyDataSetChanged()
     }
 
     override fun getCount(): Int {
@@ -28,7 +33,6 @@ class MovieMainPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAda
     }
 
     override fun getItem(position: Int): Fragment {
-        fragmentList.add(MovieFragment(simpleMovies.get(position), position))
         return fragmentList.get(position)
     }
 }

@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import ows.kotlinstudy.movierankapp.Constants.CURRENT_POSITION
 import ows.kotlinstudy.movierankapp.R
 import ows.kotlinstudy.movierankapp.adapter.viewpager.MovieMainPagerAdapter
 import ows.kotlinstudy.movierankapp.dagger.module.FragmentModule
@@ -29,6 +30,7 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
     private lateinit var menuTextView: TextView
     private lateinit var translateTop: Animation
     private lateinit var translateBottom: Animation
+    private var currentPosition = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +57,7 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        currentPosition = binding?.viewPager?.currentItem ?: 0
         binding = null
     }
 
@@ -75,14 +78,17 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
 
     private fun initMenuActionView() {
         binding?.reservationSortButton?.setOnClickListener {
+            currentPosition = 0
             movieMainViewModel.requestSimpleMovieList(1)
             binding?.menuLayout?.startAnimation(translateTop)
         }
         binding?.curationSortButton?.setOnClickListener {
+            currentPosition = 0
             movieMainViewModel.requestSimpleMovieList(2)
             binding?.menuLayout?.startAnimation(translateTop)
         }
         binding?.dueSortButton?.setOnClickListener {
+            currentPosition = 0
             movieMainViewModel.requestSimpleMovieList(3)
             binding?.menuLayout?.startAnimation(translateTop)
         }
@@ -121,10 +127,11 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
 
         movieMainViewModel.simpleMoviseLiveData.observe(viewLifecycleOwner, {
             movieMainPagerAdapter.addItems(it)
+            binding?.viewPager?.currentItem = currentPosition
         })
 
         movieMainViewModel.sortNameLiveData.observe(viewLifecycleOwner, {
-            //menuTextView.text = it
+            menuTextView.text = it
         })
     }
 

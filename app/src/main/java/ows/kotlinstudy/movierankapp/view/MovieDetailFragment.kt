@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -27,7 +28,7 @@ import ows.kotlinstudy.movierankapp.viewmodel.ViewModelFactory
 import java.text.DecimalFormat
 import javax.inject.Inject
 
-class MovieDetailFragment : Fragment() {
+class MovieDetailFragment : Fragment(){
 
     private var binding: FragmentMoviedetailBinding? = null
     private lateinit var movieDetailViewModel: MovieDetailViewModel

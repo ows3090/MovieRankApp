@@ -8,7 +8,7 @@
         android:id="@+id/nav_movie"
         android:name="ows.kotlinstudy.movierankapp.view.MovieMainFragment"
         android:label="영화 목록"
-        tools:layout="@layout/fragment_moviemain" />
+        tools:layout="@layout/fragment_moviemain"/>
     <fragment
         android:id="@+id/nav_moviedetail"
         android:name="ows.kotlinstudy.movierankapp.view.MovieDetailFragment"

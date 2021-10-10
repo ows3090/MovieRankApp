@@ -1,6 +1,7 @@
 package ows.kotlinstudy.movierankapp.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
@@ -56,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
     fun getAcitivtyComponent() = activityComponent
 
-    fun showMovieDetail(id : Int) {
+    fun showMovieDetail(id: Int) {
         navController.navigate(R.id.nav_moviedetail, Bundle().apply { putInt(MOVIEID, id) })
     }
 

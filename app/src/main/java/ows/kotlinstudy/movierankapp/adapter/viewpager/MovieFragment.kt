@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.Request
 import com.bumptech.glide.request.RequestListener
@@ -73,6 +74,7 @@ class MovieFragment(var simpleMovie: SimpleMovie, val position: Int) : Fragment(
 
             Glide.with(binding.movieImageView.rootView)
                 .load(simpleMovie.image)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(
                         e: GlideException?,
