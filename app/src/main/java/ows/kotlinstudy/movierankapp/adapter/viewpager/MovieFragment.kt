@@ -4,10 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.util.LruCache
 import android.view.LayoutInflater
 import android.view.View
@@ -15,28 +12,16 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.Request
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import kotlinx.coroutines.*
 import ows.kotlinstudy.movierankapp.R
 import ows.kotlinstudy.movierankapp.databinding.FragmentMovieBinding
-import ows.kotlinstudy.movierankapp.response.SimpleMovie
+import ows.kotlinstudy.movierankapp.repository.model.SimpleMovie
 import ows.kotlinstudy.movierankapp.view.MainActivity
-import java.io.BufferedInputStream
-import java.io.IOException
-import java.io.InputStream
-import java.lang.NullPointerException
-import java.lang.RuntimeException
-import java.net.MalformedURLException
-import java.net.URI
-import java.net.URL
-import kotlin.math.max
 
 class MovieFragment(var simpleMovie: SimpleMovie, val position: Int) : Fragment() {
 

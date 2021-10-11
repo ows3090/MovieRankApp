@@ -1,11 +1,13 @@
 package ows.kotlinstudy.movierankapp.repository
 
-import android.util.Log
 import androidx.room.RoomDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ows.kotlinstudy.movierankapp.database.MovieDatabase
-import ows.kotlinstudy.movierankapp.response.*
+import ows.kotlinstudy.movierankapp.repository.model.Comment
+import ows.kotlinstudy.movierankapp.repository.model.Movie
+import ows.kotlinstudy.movierankapp.repository.model.SimpleMovie
+import ows.kotlinstudy.movierankapp.repository.response.*
 import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(

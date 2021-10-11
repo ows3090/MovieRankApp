@@ -2,7 +2,6 @@ package ows.kotlinstudy.movierankapp.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -11,9 +10,9 @@ import ows.kotlinstudy.movierankapp.Constants.MOVIEINFO
 import ows.kotlinstudy.movierankapp.R
 import ows.kotlinstudy.movierankapp.adapter.recyclerview.CommentAdapter
 import ows.kotlinstudy.movierankapp.databinding.ActivityCommentBinding
-import ows.kotlinstudy.movierankapp.response.Comment
-import ows.kotlinstudy.movierankapp.response.Movie
-import ows.kotlinstudy.movierankapp.response.MovieCommentResponse
+import ows.kotlinstudy.movierankapp.repository.model.Comment
+import ows.kotlinstudy.movierankapp.repository.model.Movie
+import ows.kotlinstudy.movierankapp.repository.response.MovieCommentResponse
 import java.text.DecimalFormat
 
 class CommentActivity : AppCompatActivity() {

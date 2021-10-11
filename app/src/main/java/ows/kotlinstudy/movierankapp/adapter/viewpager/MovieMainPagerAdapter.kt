@@ -1,10 +1,9 @@
 package ows.kotlinstudy.movierankapp.adapter.viewpager
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import ows.kotlinstudy.movierankapp.response.SimpleMovie
+import ows.kotlinstudy.movierankapp.repository.model.SimpleMovie
 
 class MovieMainPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager,
     BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

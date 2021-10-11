@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import ows.kotlinstudy.movierankapp.response.SimpleMovie
+import ows.kotlinstudy.movierankapp.repository.model.SimpleMovie
 
 @Dao
 interface SimpleMovieDao {

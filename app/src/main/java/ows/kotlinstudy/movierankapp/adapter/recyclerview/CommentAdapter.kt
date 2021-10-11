@@ -1,12 +1,11 @@
 package ows.kotlinstudy.movierankapp.adapter.recyclerview
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ows.kotlinstudy.movierankapp.databinding.CommentItemBinding
-import ows.kotlinstudy.movierankapp.response.Comment
+import ows.kotlinstudy.movierankapp.repository.model.Comment
 
 class CommentAdapter : RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
     private val comments = ArrayList<Comment>()

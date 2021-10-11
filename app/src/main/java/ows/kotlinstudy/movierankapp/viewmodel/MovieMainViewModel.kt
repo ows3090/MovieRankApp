@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ows.kotlinstudy.movierankapp.repository.MovieRepository
-import ows.kotlinstudy.movierankapp.response.SimpleMovie
+import ows.kotlinstudy.movierankapp.repository.model.SimpleMovie
 import javax.inject.Inject
 
 class MovieMainViewModel @Inject constructor(

@@ -1,7 +1,8 @@
-package ows.kotlinstudy.movierankapp.response
+package ows.kotlinstudy.movierankapp.repository.response
 
 
 import com.google.gson.annotations.SerializedName
+import ows.kotlinstudy.movierankapp.repository.model.SimpleMovie
 
 data class MovieListResponse(
     @SerializedName("code")
