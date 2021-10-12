@@ -2,7 +2,7 @@ package ows.kotlinstudy.movierankapp.repository
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import ows.kotlinstudy.movierankapp.repository.request.MovieLikeAndDisLikeRequestBody
+import okhttp3.MultipartBody
 import ows.kotlinstudy.movierankapp.repository.response.MovieCommentResponse
 import ows.kotlinstudy.movierankapp.repository.response.MovieDetailResponse
 import ows.kotlinstudy.movierankapp.repository.response.MovieLikeAndDisLikeResponse
@@ -37,10 +37,11 @@ class RemoteDataSource @Inject constructor(
     ): Response<MovieLikeAndDisLikeResponse> {
         return withContext(Dispatchers.IO) {
             movieService.requestMovieIncreaseLikeDisLikeForCoroutine(
-                HashMap<String,String>().apply {
-                    put("id",id.toString())
-                    put("likeyn",likeyn)
-                }
+                MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("id",id.toString())
+                    .addFormDataPart("likeyn",likeyn)
+                    .build()
             )
         }
     }
@@ -51,10 +52,11 @@ class RemoteDataSource @Inject constructor(
     ): Response<MovieLikeAndDisLikeResponse> {
         return withContext(Dispatchers.IO) {
             movieService.requestMovieIncreaseLikeDisLikeForCoroutine(
-                HashMap<String,String>().apply {
-                    put("id",id.toString())
-                    put("dislikeyn",dislikeyn)
-                }
+                MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("id",id.toString())
+                    .addFormDataPart("dislikeyn",dislikeyn)
+                    .build()
             )
         }
     }

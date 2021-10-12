@@ -1,11 +1,10 @@
 package ows.kotlinstudy.movierankapp.repository
 
-import ows.kotlinstudy.movierankapp.repository.request.MovieLikeAndDisLikeRequestBody
+import okhttp3.RequestBody
 import ows.kotlinstudy.movierankapp.repository.response.MovieCommentResponse
 import ows.kotlinstudy.movierankapp.repository.response.MovieDetailResponse
 import ows.kotlinstudy.movierankapp.repository.response.MovieLikeAndDisLikeResponse
 import ows.kotlinstudy.movierankapp.repository.response.MovieListResponse
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -24,9 +23,6 @@ interface MovieService {
     suspend fun requestMovieCommentListForCoroutine(@Query("id") id : Int) : Response<MovieCommentResponse>
 
     @POST("increaseLikeDisLike")
-    suspend fun requestMovieIncreaseLikeDisLikeForCoroutine(@Body body : HashMap<String,String>) : Response<MovieLikeAndDisLikeResponse>
-
-    @POST("increaseLikeDisLike")
-    fun requestMovieIncreaseLikeDisLike(@Body body : HashMap<String,String>) : Call<MovieLikeAndDisLikeResponse>
+    suspend fun requestMovieIncreaseLikeDisLikeForCoroutine(@Body body : RequestBody) : Response<MovieLikeAndDisLikeResponse>
 
 }
