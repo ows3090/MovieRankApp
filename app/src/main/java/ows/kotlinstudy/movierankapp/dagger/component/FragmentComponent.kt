@@ -10,11 +10,11 @@ import ows.kotlinstudy.movierankapp.dagger.module.ViewModelModule
 import ows.kotlinstudy.movierankapp.view.MovieDetailFragment
 import ows.kotlinstudy.movierankapp.view.MovieMainFragment
 
-@Subcomponent(modules = [FragmentModule::class, ViewModelModule::class, ViewModelFactoryModule::class])
+@Subcomponent(modules = [FragmentModule::class])
 @FragmentScope
 interface FragmentComponent {
-    fun inject(movieMainFragment: MovieMainFragment)
-    fun inject(movieDetailFragment: MovieDetailFragment)
+    fun inject(movieMainFragment : MovieMainFragment)
+    fun inject(movieDetailFragment : MovieDetailFragment)
 
     @Subcomponent.Builder
     interface Builder{

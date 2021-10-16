@@ -1,7 +1,6 @@
 package ows.kotlinstudy.movierankapp.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -11,7 +10,6 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import ows.kotlinstudy.movierankapp.Constants.CURRENT_POSITION
 import ows.kotlinstudy.movierankapp.R
 import ows.kotlinstudy.movierankapp.adapter.viewpager.MovieMainPagerAdapter
 import ows.kotlinstudy.movierankapp.dagger.module.FragmentModule
@@ -25,7 +23,9 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
     private var binding: FragmentMoviemainBinding? = null
     private lateinit var movieMainPagerAdapter: MovieMainPagerAdapter
     private lateinit var movieMainViewModel: MovieMainViewModel
-    @Inject lateinit var viewModelFactory: ViewModelFactory
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     private var isMenuOpen: Boolean = false
     private lateinit var menuTextView: TextView
     private lateinit var translateTop: Animation
@@ -63,7 +63,8 @@ class MovieMainFragment : Fragment(), Animation.AnimationListener {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_moviesort, menu)
-        menuTextView = (menu.findItem(R.id.sortItem).actionView as LinearLayout).findViewById(R.id.menuTextView)
+        menuTextView =
+            (menu.findItem(R.id.sortItem).actionView as LinearLayout).findViewById(R.id.menuTextView)
         (menu.findItem(R.id.sortItem).actionView as LinearLayout).run {
             setOnClickListener {
                 if (isMenuOpen) {

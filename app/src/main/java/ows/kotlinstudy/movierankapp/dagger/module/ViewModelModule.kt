@@ -8,6 +8,7 @@ import dagger.multibindings.IntoMap
 import ows.kotlinstudy.movierankapp.adapter.ViewModelKey
 import ows.kotlinstudy.movierankapp.viewmodel.MovieDetailViewModel
 import ows.kotlinstudy.movierankapp.viewmodel.MovieMainViewModel
+import ows.kotlinstudy.movierankapp.viewmodel.WritingViewModel
 
 @Module
 abstract class ViewModelModule {
@@ -21,4 +22,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MovieDetailViewModel::class)
     abstract fun bindMovieDetailViewModel(movieDetailViewModel: MovieDetailViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(WritingViewModel::class)
+    abstract fun bindWritingViewModel(writingViewModel: WritingViewModel) : ViewModel
 }

@@ -1,5 +1,6 @@
 package ows.kotlinstudy.movierankapp.viewmodel
 
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 import ows.kotlinstudy.movierankapp.R
 import ows.kotlinstudy.movierankapp.adapter.recyclerview.CommentAdapter
 import ows.kotlinstudy.movierankapp.adapter.recyclerview.GalleryAdapter
+import ows.kotlinstudy.movierankapp.default
 import ows.kotlinstudy.movierankapp.repository.MovieRepository
 import ows.kotlinstudy.movierankapp.repository.model.Comment
 import ows.kotlinstudy.movierankapp.repository.model.Movie
@@ -37,11 +39,11 @@ class MovieDetailViewModel @Inject constructor(
     val loadingLiveData: LiveData<Boolean>
         get() = loadingMutableLiveData
 
-    private val likeStateMutableLiveData = MutableLiveData<Boolean>().apply { value = false }
+    private val likeStateMutableLiveData = MutableLiveData<Boolean>().default(false)
     val likeStateLiveData: LiveData<Boolean>
         get() = likeStateMutableLiveData
 
-    private val dislikeStateMutableLiveData = MutableLiveData<Boolean>().apply { value = false }
+    private val dislikeStateMutableLiveData = MutableLiveData<Boolean>().default(false)
     val dislikeStateLiveData: LiveData<Boolean>
         get() = dislikeStateMutableLiveData
 
@@ -55,7 +57,6 @@ class MovieDetailViewModel @Inject constructor(
                 response.data?.let {
                     it.result?.let { movies ->
                         if (movies.size > 0) movieMutableLiveData.value = movies.first()
-
                     }
                 }
             }
@@ -80,7 +81,13 @@ class MovieDetailViewModel @Inject constructor(
             val response = repository.requestMovieLike(id, likeyn)
 
             if (response.code == 1) {
-                likeStateMutableLiveData.value = likeStateMutableLiveData.value?.not()
+                var state = likeStateLiveData.value?.not() ?: false
+                likeStateMutableLiveData.value = state
+
+                val movie = movieMutableLiveData.value?.apply {
+                    if(state) like++ else like--
+                }
+                movieMutableLiveData.value = movie
             }
         }
     }
@@ -90,7 +97,13 @@ class MovieDetailViewModel @Inject constructor(
             val response = repository.requestMovieDisLike(id, dislikeyn)
 
             if (response.code == 1) {
-                dislikeStateMutableLiveData.value = dislikeStateMutableLiveData.value?.not()
+                var state = dislikeStateLiveData.value?.not() ?: false
+                dislikeStateMutableLiveData.value = state
+
+                val movie = movieMutableLiveData.value?.apply {
+                    if(state) dislike++ else dislike--
+                }
+                movieMutableLiveData.value = movie
             }
         }
     }
@@ -108,21 +121,13 @@ class MovieDetailViewModel @Inject constructor(
         @BindingAdapter("grade")
         fun loadAgeImage(view: ImageView, grade: Int) {
             when (grade) {
-                12 -> Glide.with(view.context)
-                    .load(R.drawable.ic_12)
-                    .into(view)
+                12 -> view.setImageResource(R.drawable.ic_12)
 
-                15 -> Glide.with(view.context)
-                    .load(R.drawable.ic_15)
-                    .into(view)
+                15 -> view.setImageResource(R.drawable.ic_15)
 
-                19 -> Glide.with(view.context)
-                    .load(R.drawable.ic_19)
-                    .into(view)
+                19 -> view.setImageResource(R.drawable.ic_19)
 
-                else -> Glide.with(view.context)
-                    .load(R.drawable.ic_all)
-                    .into(view)
+                else -> view.setImageResource(R.drawable.ic_all)
             }
         }
 
@@ -178,3 +183,5 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 }
+
+

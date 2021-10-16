@@ -3,6 +3,7 @@ package ows.kotlinstudy.movierankapp.repository.model
 
 import android.os.Parcelable
 import androidx.annotation.Nullable
+import androidx.databinding.Bindable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -35,7 +36,7 @@ data class Movie(
 
     @ColumnInfo(name = "dislike")
     @SerializedName("dislike")
-    val dislike: Int,
+    var dislike: Int,
 
     @ColumnInfo(name = "duration")
     @SerializedName("duration")
@@ -60,7 +61,7 @@ data class Movie(
 
     @ColumnInfo(name = "like")
     @SerializedName("like")
-    val like: Int,
+    var like: Int,
 
     @ColumnInfo(name = "outlinks")
     @Nullable

@@ -30,4 +30,6 @@
     <string name="allview_text">모두 보기</string>
     <string name="reservation_text">예매하기</string>
     <string name="comment_activity_name">한줄평 목록</string>
+    <string name="movie_rating_text">평점을 입력해주세요.</string>
+    <string name="writing_activity_name">한줄평 작성</string>
 </resources>

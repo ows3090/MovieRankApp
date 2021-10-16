@@ -10,7 +10,6 @@ import javax.inject.Singleton
 @Component(modules = [DBModule::class, NetworkModule::class])
 @Singleton
 interface AppComponent {
-    fun inject(movieApplication: MovieApplication)
     fun getActivityBuilder() : ActivityComponent.Builder
 
     @Component.Factory

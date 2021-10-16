@@ -1,10 +1,16 @@
 package ows.kotlinstudy.movierankapp.view
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -25,6 +31,13 @@ class MovieDetailFragment : Fragment() {
 
     private var binding: FragmentMoviedetailBinding? = null
     private lateinit var movieDetailViewModel: MovieDetailViewModel
+    private val resultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            movieDetailViewModel.requestCommentList(movieId)
+        }
+    }
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -41,8 +54,10 @@ class MovieDetailFragment : Fragment() {
         binding = fragmentMovieDetailBinding
 
         initViewModel()
-        fragmentMovieDetailBinding.viewmodel = movieDetailViewModel
-        fragmentMovieDetailBinding.lifecycleOwner = this
+        binding?.apply {
+            lifecycleOwner = this@MovieDetailFragment
+            viewmodel = movieDetailViewModel
+        }
 
         return fragmentMovieDetailBinding.root
     }
@@ -115,27 +130,45 @@ class MovieDetailFragment : Fragment() {
             binding.likeButton.setOnClickListener {
                 movieDetailViewModel.likeStateLiveData.value?.let {
                     if (it) movieDetailViewModel.requestMovieLike(movieId, "N")
-                    else movieDetailViewModel.requestMovieLike(movieId, "Y")
+                    else {
+                        if (movieDetailViewModel.dislikeStateLiveData.value!!) {
+                            movieDetailViewModel.requestMovieDisLike(movieId, "N")
+                        }
+                        movieDetailViewModel.requestMovieLike(movieId, "Y")
+                    }
                 }
             }
 
             binding.dislikeButton.setOnClickListener {
                 movieDetailViewModel.dislikeStateLiveData.value?.let {
-                    if (it) movieDetailViewModel.requestMovieLike(movieId, "N")
-                    else movieDetailViewModel.requestMovieLike(movieId, "Y")
+                    if (it) movieDetailViewModel.requestMovieDisLike(movieId, "N")
+                    else {
+                        if (movieDetailViewModel.likeStateLiveData.value!!) {
+                            movieDetailViewModel.requestMovieLike(movieId, "N")
+                        }
+                        movieDetailViewModel.requestMovieDisLike(movieId, "Y")
+                    }
                 }
             }
 
-            movieDetailViewModel.likeStateLiveData.observe(viewLifecycleOwner){
+            movieDetailViewModel.likeStateLiveData.observe(viewLifecycleOwner) {
                 if (it) binding.likeButton.setBackgroundResource(R.drawable.ic_thumb_up_selected)
                 else binding.likeButton.setBackgroundResource(R.drawable.ic_thumb_up)
-                movieDetailViewModel.requestMovieDetail(movieId)
             }
 
-            movieDetailViewModel.dislikeStateLiveData.observe(viewLifecycleOwner){
+            movieDetailViewModel.dislikeStateLiveData.observe(viewLifecycleOwner) {
                 if (it) binding.dislikeButton.setBackgroundResource(R.drawable.ic_thumb_down_selected)
                 else binding.dislikeButton.setBackgroundResource(R.drawable.ic_thumb_down)
-                movieDetailViewModel.requestMovieDetail(movieId)
+            }
+
+            binding.writeButton.setOnClickListener {
+                resultLauncher.launch(
+                    Intent(
+                        requireContext(), WritingActivity::class.java
+                    ).apply {
+                        putExtra(MOVIEINFO, movieDetailViewModel.movieLiveData.value)
+                    }
+                )
             }
         }
     }

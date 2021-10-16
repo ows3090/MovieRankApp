@@ -3,11 +3,10 @@ package ows.kotlinstudy.movierankapp.repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
-import ows.kotlinstudy.movierankapp.repository.response.MovieCommentResponse
-import ows.kotlinstudy.movierankapp.repository.response.MovieDetailResponse
-import ows.kotlinstudy.movierankapp.repository.response.MovieLikeAndDisLikeResponse
-import ows.kotlinstudy.movierankapp.repository.response.MovieListResponse
+import ows.kotlinstudy.movierankapp.repository.response.*
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
@@ -56,6 +55,28 @@ class RemoteDataSource @Inject constructor(
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("id",id.toString())
                     .addFormDataPart("dislikeyn",dislikeyn)
+                    .build()
+            )
+        }
+    }
+
+    suspend fun fetchWriteComment(
+        id : Int,
+        writer : String,
+        rating : Float,
+        contents : String
+    ) : Response<MovieWritingCommentResponse>{
+        val time = SimpleDateFormat("yyyy-MM-dd").format(Date())
+
+        return withContext(Dispatchers.IO){
+            movieService.requestMovieWritingCommentForCoroutine(
+                MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("id",id.toString())
+                    .addFormDataPart("writer",writer)
+                    .addFormDataPart("time",time)
+                    .addFormDataPart("rating",rating.toString())
+                    .addFormDataPart("contents",contents)
                     .build()
             )
         }

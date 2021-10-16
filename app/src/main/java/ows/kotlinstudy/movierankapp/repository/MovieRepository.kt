@@ -1,18 +1,14 @@
 package ows.kotlinstudy.movierankapp.repository
 
 import ows.kotlinstudy.movierankapp.NetworkStatus
-import ows.kotlinstudy.movierankapp.repository.response.MovieCommentResponse
-import ows.kotlinstudy.movierankapp.repository.response.MovieDetailResponse
-import ows.kotlinstudy.movierankapp.repository.response.MovieLikeAndDisLikeResponse
-import ows.kotlinstudy.movierankapp.repository.response.MovieListResponse
+import ows.kotlinstudy.movierankapp.repository.response.*
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val remoteDataSource: RemoteDataSource
+    private val remoteDataSource: RemoteDataSource,
+    private val networkStatus: NetworkStatus
 ) {
-    @Inject
-    lateinit var networkStatus: NetworkStatus
 
     suspend fun requestSimpleMovieList(type: Int): ResponseResult<MovieListResponse> {
         /**
@@ -95,6 +91,23 @@ class MovieRepository @Inject constructor(
         }
 
         val response = remoteDataSource.fetchMovieDisLike(id, dislikeyn)
+        if (response.isSuccessful) {
+            return ResponseResult.Success(response.body(), 1)
+        }
+        return ResponseResult.Fail(response.body(), 2)
+    }
+
+    suspend fun requestWriteComment(
+        id: Int,
+        writer: String,
+        rating: Float,
+        contents: String
+    ): ResponseResult<MovieWritingCommentResponse> {
+        if (networkStatus == NetworkStatus.NOT_CONNECTED) {
+            return ResponseResult.Fail(null, 2)
+        }
+
+        val response = remoteDataSource.fetchWriteComment(id, writer, rating, contents)
         if (response.isSuccessful) {
             return ResponseResult.Success(response.body(), 1)
         }

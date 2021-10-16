@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun initActivityComponent() {
         activityComponent = (application as MovieApplication).getAppComponent().getActivityBuilder()
-            .setActivity(this)
             .setModule(ActivityModule())
             .build()
         activityComponent.inject(this)
