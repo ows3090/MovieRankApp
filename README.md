@@ -26,12 +26,10 @@ I used to repository pattern to use to local DB according to the network state.
 <br>
 
 ## MAD Scorecard
-![image](https://user-images.githubusercontent.com/34837583/137618789-8981f0ab-2128-4bb1-af19-3bc9e501cb46.png)
+<img src="https://user-images.githubusercontent.com/34837583/137618755-c5ee345e-c2f0-4887-95fb-2258059a397f.png" width="500">
+<img src="https://user-images.githubusercontent.com/34837583/137618767-8d06981c-628a-4173-9aa8-15433d98c4c4.png" width="500">
+<img src="https://user-images.githubusercontent.com/34837583/137618789-8981f0ab-2128-4bb1-af19-3bc9e501cb46.png" width="500">
+<br>
 
-
-<img src="https://user-images.githubusercontent.com/34837583/137618755-c5ee345e-c2f0-4887-95fb-2258059a397f.png" width="250">
-<img src="https://user-images.githubusercontent.com/34837583/137618767-8d06981c-628a-4173-9aa8-15433d98c4c4.png" width="250">
-<img src="https://user-images.githubusercontent.com/34837583/137618789-8981f0ab-2128-4bb1-af19-3bc9e501cb46.png" width="250">
-
-
+## Architecture
 
