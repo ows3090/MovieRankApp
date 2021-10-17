@@ -25,11 +25,17 @@ I used to repository pattern to use to local DB according to the network state.
 - Coroutine : Implement asynchronous programming easily
 <br>
 
-## MAD Scorecard
+## MAD Score
 <img src="https://user-images.githubusercontent.com/34837583/137618755-c5ee345e-c2f0-4887-95fb-2258059a397f.png" width="500">
-<img src="https://user-images.githubusercontent.com/34837583/137618767-8d06981c-628a-4173-9aa8-15433d98c4c4.png" width="500">
+<img src="https://user-images.githubusercontent.com/34837583/137618878-9d035fdf-4723-4863-b4d1-dc503981cdd9.png" width="500">
 <img src="https://user-images.githubusercontent.com/34837583/137618789-8981f0ab-2128-4bb1-af19-3bc9e501cb46.png" width="500">
 <br>
 
 ## Architecture
+I implemented it based on mvvm architecture using databinding, livedata, viewmodel.
+Communication with the server is implemented to call the local DB or server according to the network rather than one data source.
+With the same interface, the data source can be determined by itself.
+
+![image](https://user-images.githubusercontent.com/34837583/137619107-57a33b4f-48b7-44f1-8373-88278a17e9a6.png)
+
 
